@@ -1,0 +1,39 @@
+version: '3.2'
+
+services:
+
+  redis:
+    image: redis:alpine
+
+  db:
+    image: postgres:9.6.3-alpine
+    environment:
+      - "POSTGRES_PASSWORD=123456"
+    volumes:
+      - "db:/var/lib/postgresql/data"
+    ports:
+      - "15432:5432"
+
+  solr:
+    build: solr
+    image: data4dappl/solr
+
+  ckan:
+    depends_on:
+      - redis
+      - db
+      - solr
+    build: ckan
+    image: data4dappl/ckan
+    ports:
+      - "5000:5000"
+    volumes:
+    # for development, we mount the extension folder
+    # for production, it should be commented out
+      - "./ckan/ckanext-odata_org_il:/ckanext-odata_org_il"
+    # the ckan image has default configuration files which connect to db and solr setup by docker compose
+    # if you want to change the settings, you should mount the ckan configuration directory and modify the settings
+    #   - ".docker-data/ckan/config:/etc/ckan/default"
+
+volumes:
+  db:

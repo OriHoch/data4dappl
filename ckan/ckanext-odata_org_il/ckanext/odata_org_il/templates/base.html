@@ -1,0 +1,9 @@
+{% ckan_extends %}
+
+{% block styles %}
+  {{ super() }}
+  {% if request.environ.CKAN_LANG == "he" %}
+    {# {% resource 'odata_org_il/bootstrap.rtl.css' %} #}
+    {% resource 'odata_org_il/rtl.css' %}
+  {% endif %}
+{% endblock %}

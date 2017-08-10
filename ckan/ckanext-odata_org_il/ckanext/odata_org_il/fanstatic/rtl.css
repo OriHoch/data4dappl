@@ -1,0 +1,16 @@
+.heading, .module-heading, a, p, .dataset-list, .search-form, h1,
+#dataset-resources, .additional-info, .tags, td.dataset-details, th.dataset-label,
+.context-info, .flash-messages, .page_primary_action
+{
+    direction: rtl;
+    text-align: right;
+}
+
+.search-form .search-input.search-giant button {
+    margin-top: -15px;
+    left: 15px;
+}
+
+.context-info .nums dl {
+    float: right;
+}

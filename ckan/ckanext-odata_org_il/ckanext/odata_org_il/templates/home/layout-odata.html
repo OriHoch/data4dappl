@@ -1,0 +1,19 @@
+<div role="main" class="hero">
+  <div class="container">
+    {% block search %}
+      {% snippet 'home/snippets/search.html' %}
+    {% endblock %}
+  </div>
+  <div class="container">
+    {% block tags %}
+      {% snippet 'package/snippets/tags.html' %}
+    {% endblock %}
+  </div>
+</div>
+<div role="main">
+  <div class="container">
+	{% block featured_organization %}
+	  {% snippet 'home/snippets/featured_organization.html' %}
+	{% endblock %}
+  </div>
+</div>
