@@ -7,3 +7,9 @@
     {% resource 'odata_org_il/rtl.css' %}
   {% endif %}
 {% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script>CKAN_LANG="{{request.environ.CKAN_LANG}}";</script>
+  {% resource 'odata_org_il/rtl.js' %}
+{% endblock -%}

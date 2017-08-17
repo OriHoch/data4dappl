@@ -1,7 +1,7 @@
 .heading, .module-heading, a, p, .dataset-list, .search-form, h1,
 #dataset-resources, .additional-info, .tags, td.dataset-details, th.dataset-label,
 .context-info, .flash-messages, .page_primary_action, .breadcrumb,
-.media-item
+.media-item, .nav-item
 {
     direction: rtl;
     text-align: right;
@@ -32,4 +32,8 @@
 
 .homepage .module-search .tags h3, .homepage .module-search .tags .tag {
     float: right;
+}
+
+.nav-facet .nav-item a span {
+    padding-right: 15px;
 }
