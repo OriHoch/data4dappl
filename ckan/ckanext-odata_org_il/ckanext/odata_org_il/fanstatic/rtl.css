@@ -29,3 +29,7 @@
 .resource-item {
     padding: 10px 60px 10px 10px;
 }
+
+.homepage .module-search .tags h3, .homepage .module-search .tags .tag {
+    float: right;
+}

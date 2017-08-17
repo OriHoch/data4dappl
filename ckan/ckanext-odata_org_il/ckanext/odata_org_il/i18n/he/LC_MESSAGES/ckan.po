@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ckan 2.6.0b0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-10-18 10:37+0100\n"
-"PO-Revision-Date: 2017-08-17 11:49+0300\n"
+"PO-Revision-Date: 2017-08-17 12:03+0300\n"
 "Last-Translator: Adrià Mercader <adria.mercader@okfn.org>, 2016\n"
 "Language-Team: Hebrew (https://www.transifex.com/okfn/teams/11162/he/)\n"
 "MIME-Version: 1.0\n"
@@ -2763,11 +2763,11 @@ msgstr ""
 
 #: ckan/templates/home/snippets/search.html:6
 msgid "Search data"
-msgstr ""
+msgstr "חיפוש"
 
 #: ckan/templates/home/snippets/search.html:16
 msgid "Popular tags"
-msgstr ""
+msgstr "תגיות פופולריות"
 
 #: ckan/templates/home/snippets/stats.html:5
 msgid "{0} statistics"
