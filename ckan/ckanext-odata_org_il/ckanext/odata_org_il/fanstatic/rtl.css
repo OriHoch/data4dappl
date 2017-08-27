@@ -24,6 +24,7 @@
 .resource-item .format-label {
     left: auto;
     right: 10px;
+    direction: ltr;
 }
 
 .resource-item {
