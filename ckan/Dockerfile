@@ -11,6 +11,9 @@ RUN /usr/lib/ckan/default/bin/pip install -r /requirement-setuptools.txt
 RUN /usr/lib/ckan/default/bin/pip install -r /requirements-ckan.txt
 RUN /usr/lib/ckan/default/bin/pip install -e 'git+https://github.com/ckan/ckan.git@ckan-2.7.0#egg=ckan'
 
+# psql is used to restore db from backup
+RUN apt-get update && apt-get install -y postgresql-client
+
 RUN mkdir -p /etc/ckan/default
 COPY development.ini /etc/ckan/default/development.ini
 COPY who.ini /etc/ckan/default/who.ini

@@ -16,7 +16,7 @@ services:
 
   solr:
     build: solr
-    image: data4dappl/solr
+    image: orihoch/data4dappl-solr
 
   ckan:
     depends_on:
@@ -24,7 +24,7 @@ services:
       - db
       - solr
     build: ckan
-    image: data4dappl/ckan
+    image: orihoch/data4dappl-ckan
     ports:
       - "5000:5000"
     volumes:
