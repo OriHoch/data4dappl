@@ -1,0 +1,82 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: persistent-host
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: letsencrypt
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: letsencrypt
+    spec:
+      nodeSelector:
+        # let's encrypt shares volumes with nginx using hostPath - they must be on the same node
+        # if this node becomes unavailable - you need to restore from backup to the new node and change the selector
+        # TODO: change to use network shared filesystem
+        kubernetes.io/hostname: gke-data4dappl-default-pool-29af7936-z7tf
+      containers:
+      - name: letsencrypt
+        # https://github.com/OriHoch/datapackage-pipelines-plus-plus/tree/master/devops/letsencrypt
+        image: orihoch/datapackage-pipelines-plus-plus-letsencrypt:v0.0.1
+        command:
+        - "bash"
+        - "-c"
+        - >
+
+          mkdir -p /persistent-host/letsencrypt-log &&
+          echo "cp -Rf /var/log/letsencrypt/. /persistent-host/letsencrypt-log" >> /backup.sh &&
+          echo "cp -Rf /persistent-host/letsencrypt-log/. /var/log/letsencrypt" >> /restore.sh &&
+
+          mkdir -p /persistent-host/letsencrypt-etc &&
+          echo "cp -Rf /etc/letsencrypt/. /persistent-host/letsencrypt-etc" >> /backup.sh &&
+          echo "cp -Rf /persistent-host/letsencrypt-etc/. /etc/letsencrypt" >> /restore.sh &&
+
+          mkdir -p /persistent-host/nginx-html &&
+          echo "cp -Rf /nginx-html/. /persistent-host/nginx-html" >> /backup.sh &&
+          echo "cp -Rf /persistent-host/nginx-html/. /nginx-html" >> /restore.sh &&
+
+          chmod +x /backup.sh &&
+          chmod +x /restore.sh &&
+
+          echo "/backup.sh" >> /renew_certs.sh &&
+          echo "/backup.sh" >> /issue_cert.sh &&
+
+          /restore.sh &&
+
+          /entrypoint.sh
+        resources:
+          requests:
+            cpu: 1m
+        volumeMounts:
+        - name: host
+          mountPath: /var/log/letsencrypt
+          subPath: letsencrypt-log
+        - name: host
+          mountPath: /etc/letsencrypt
+          subPath: letsencrypt-etc
+        - name: host
+          mountPath: /nginx-html
+          subPath: nginx-html
+        - name: persistent-host
+          mountPath: /persistent-host
+      volumes:
+      # this hostPath is shared with nginx - which reads the certificates and auth challenges
+      - name: host
+        # TODO: change to NFS or some other network filesystem which allows to write from letsencrypt pod and read from nginx pod/s
+        hostPath:
+          path: /var/data4dappl-host
+      # we use this for persistency of the host data
+      - name: persistent-host
+        persistentVolumeClaim:
+          claimName: persistent-host

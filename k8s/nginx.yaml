@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Service
+metadata: {name: nginx}
+spec:
+  ports:
+  - {name: '80', port: 80}
+  - {name: '443', port: 443}
+  selector: {app: nginx}
+  type: LoadBalancer
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata: {name: nginx}
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels: {app: nginx}
+    spec:
+      nodeSelector:
+        # nginx shares volumes with let's encrypt using hostPath - they must be on the same node
+        # if this node becomes unavailable - you need to restore from backup to the new node and change the selector
+        # TODO: change to use network shared filesystem
+        kubernetes.io/hostname: gke-data4dappl-default-pool-29af7936-z7tf
+      containers:
+      - image: nginx
+        name: nginx
+        ports:
+        - {containerPort: 80}
+        - {containerPort: 443}
+        resources:
+          requests: {cpu: 20m}
+        volumeMounts:
+        - name: host
+          mountPath: /usr/share/nginx/html
+          subPath: nginx-html
+        - name: host
+          mountPath: /letsencrypt-etc
+          subPath: letsencrypt-etc
+        - name: nginx-conf-d
+          mountPath: /etc/nginx/conf.d
+          readOnly: true
+      volumes:
+      # all files are served from local hostPath
+      # let's encrypt writes files to this hostPath with the ssl certifricates and the certbot auth challenge
+      - name: host
+        # TODO: change to NFS or some other network filesystem which allows to write from letsencrypt pod and read from nginx pod/s
+        hostPath:
+          path: /var/data4dappl-host
+      - name: nginx-conf-d
+        configMap:
+          name: nginx-conf-d

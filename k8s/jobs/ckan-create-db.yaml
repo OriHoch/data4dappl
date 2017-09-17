@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ckan-create-db
+spec:
+  template:
+    metadata:
+      name: ckan-create-db
+    spec:
+      containers:
+      - name: ckan-create-db
+        image: postgres:9.6.3-alpine
+        env:
+        - {name: PGPASSWORD, valueFrom: {secretKeyRef: {name: "env-vars", key: "POSTGRES_PASSWORD"}}}
+        command: ["su-exec", "postgres", "bash", "-c", "psql -h db -U postgres -c 'CREATE DATABASE ckan;'"]
+        resources:
+          requests:
+            cpu: 1m
+      restartPolicy: Never
