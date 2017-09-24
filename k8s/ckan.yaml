@@ -1,55 +1,40 @@
 apiVersion: v1
 kind: Service
-metadata:
-  name: ckan
+metadata: {name: ckan}
 spec:
-  selector:
-    app: ckan
   ports:
-  - name: "5000"
-    port: 5000
+  - {name: '5000', port: 5000}
+  selector: {app: ckan}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
-metadata:
-  name: ckan-data
+metadata: {name: ckan-data}
 spec:
-  accessModes:
-  - ReadWriteOnce
+  accessModes: [ReadWriteOnce]
   resources:
-    requests:
-      storage: 20Gi
+    requests: {storage: 20Gi}
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
-metadata:
-  name: ckan
+metadata: {name: ckan}
 spec:
   replicas: 1
   template:
     metadata:
-      labels:
-        app: ckan
+      labels: {app: ckan}
     spec:
       containers:
-      - image: orihoch/data4dappl-ckan
+      - image: gcr.io/hasadna-odata/data4dappl-ckan:665c0303ea0962a0f1336e2e22d2291b121e8fc2
         name: ckan
         ports:
-        - containerPort: 5000
+        - {containerPort: 5000}
         resources:
-          requests:
-            cpu: 50m
+          requests: {cpu: 50m}
         volumeMounts:
-        - name: ckan-data
-          mountPath: /var/lib/ckan
-          subPath: ckan
-        - name: etc-ckan-default
-          mountPath: /etc/ckan/default
-          readOnly: true
+        - {mountPath: /var/lib/ckan, name: ckan-data, subPath: ckan}
+        - {mountPath: /etc/ckan/default, name: etc-ckan-default, readOnly: true}
       volumes:
       - name: etc-ckan-default
-        secret:
-          secretName: etc-ckan-default
+        secret: {secretName: etc-ckan-default}
       - name: ckan-data
-        persistentVolumeClaim:
-          claimName: ckan-data
+        persistentVolumeClaim: {claimName: ckan-data}
