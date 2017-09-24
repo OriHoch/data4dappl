@@ -6,3 +6,5 @@ secrets.env
 etc-ckan-default
 ckan-dump
 mnt-nfs
+nginx-secret
+.htpasswd

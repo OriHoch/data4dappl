@@ -40,6 +40,9 @@ spec:
         - name: nginx-conf-d
           mountPath: /etc/nginx/conf.d
           readOnly: true
+        - name: nginx-htpasswd
+          mountPath: /etc/nginx/htpasswd
+          readOnly: true
       volumes:
       # all files are served from local hostPath
       # let's encrypt writes files to this hostPath with the ssl certifricates and the certbot auth challenge
@@ -50,6 +53,6 @@ spec:
       - name: nginx-conf-d
         configMap:
           name: nginx-conf-d
-      - name: nginx
+      - name: nginx-htpasswd
         secret:
-          secretName: etc-ckan-default
+          secretName: nginx-htpasswd
