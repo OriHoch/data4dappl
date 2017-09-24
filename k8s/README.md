@@ -27,15 +27,17 @@ Used to deploy https://www.odata.org.il/
   * `bin/k8s_apply_job.sh ckan-initialize-db`
 
 ## Restoring data and DB from other ckan instance
+* run both locally and in the server:
+  * ```export DATE=`date +%Y-%m-%d````
 * create db dump on old server
-  * `paster --plugin=ckan db dump ./ckan-db-dump-yyyy-mm-dd -c ./development.ini`
-  * `gzip ./ckan-db-dump-yyyy-mm-dd`
+  * `paster --plugin=ckan db dump ./ckan-db-dump-$DATE -c ./development.ini`
+  * `gzip ./ckan-db-dump-$DATE`
 * copy the db dump to local pc
-  * `scp odata.org.il:/home/odata/ckan-db-dump-yyyy-mm-dd.gz ./ckan-dump/db.gz`
+  * `scp odata.org.il:/home/odata/ckan-db-dump-$DATE.gz ./ckan-dump/db.gz`
 * create data dump on old server
-  * `tar -zcvf ckan-data-yyyy-mm-dd.tar.gz ./ckan/data/`
-* copy data dump to local pc
-  * `scp 'odata.org.il:/home/odata/ckan-data-yyyy-mm-dd.tar.gz' ./ckan-dump/data.tar.gz`
+  * `tar -zcvf ckan-data-$DATE.tar.gz ./ckan/data/`
+* copy data dump to local PC
+  * `scp odata.org.il:/home/odata/ckan-data-${DATE}.tar.gz ./ckan-dump/data.tar.gz`
 * copy the data to the cluster node which the jobs are matched for
   * export NODE="main-cluster-node-name"
   * `gcloud compute ssh --project=hasadna-odata --zone us-central1-a "${NODE}"`
@@ -43,11 +45,15 @@ Used to deploy https://www.odata.org.il/
   * `gcloud compute scp --project=hasadna-odata --zone us-central1-a ./ckan-dump/db.gz "${NODE}":/var/ckan-dump/db.gz`
   * `gcloud compute scp --project=hasadna-odata --zone us-central1-a ./ckan-dump/data.tar.gz "${NODE}":/var/ckan-dump/data.tar.gz`
 * Ensure the db and data dumps are in /var/ckan-dump directory on the cluster instance:
-  * `gcloud compute ssh --project=hasadna-odata --zone "${NODE}" -- ls -lah /var/ckan-dump/`
+  * `gcloud compute ssh --project=hasadna-odata --zone us-central1-a "${NODE}" -- ls -lah /var/ckan-dump/`
   * Should get something like:
     * `-rw-r--r--  1 ori  ori  685M Sep 15 19:53 data.tar.gz`
     * `-rw-r--r--  1 ori  ori   11M Sep 15 19:17 db.gz`
+* Edit k8s/jobs/ckan-restore-data.yaml and ckan-restore-db.yaml
+  * set the hostname nodeSelector to the node you copied the dump to
+* Delete the old ckan-restore-data and ckan-restore db in K8S dashboard (if exists)
 * Stop the ckan instance and pod (to prevent conflicts while loading the data)
+  * `kubectl delete deployment ckan`
 * Run the ckan restore jobs - wait for each one to finish before starting next one, you can check status in K8S dashboard
   * `bin/k8s_apply_job.sh ckan-restore-data`
   * `bin/k8s_apply_job.sh ckan-restore-db`
@@ -97,3 +103,10 @@ Used to deploy https://www.odata.org.il/
 * once new node is running, you can drain the old node
   * `kubectl drain --force --ignore-daemonsets $OLD_NODE`
 * after you drain it, you can re-use it, or reduce node count in google container engine
+
+## Updating ckan installation
+
+* If you made changes to the ckan extension you need to update the deployment yaml to the latest commit
+* `bin/k8s_update_deployment_image.py`
+* Parameters are deployment name, which should be `ckan`
+* Commit SHA - which is the commit sha you want to deploy from OriHoch/data4dappl repo

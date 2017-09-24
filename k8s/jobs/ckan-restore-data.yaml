@@ -10,7 +10,7 @@ spec:
       nodeSelector:
         # loads data dump from hostPath
         # TODO: change to use network shared filesystem
-        kubernetes.io/hostname: gke-data4dappl-default-pool-29af7936-hdzs
+        kubernetes.io/hostname: gke-data4dappl-default-pool-29af7936-z7tf
       containers:
       - name: ckan-restore-data
         # this image was updated with psql which is needed to restore db
