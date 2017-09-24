@@ -50,3 +50,6 @@ spec:
       - name: nginx-conf-d
         configMap:
           name: nginx-conf-d
+      - name: nginx
+        secret:
+          secretName: etc-ckan-default
