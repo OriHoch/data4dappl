@@ -1,0 +1,16 @@
+version: '3.2'
+
+services:
+
+  ckan:
+    build: ckan
+# gcloud docker -- pull gcr.io/hasadna-odata/data4dappl-ckan:665c0303ea0962a0f1336e2e22d2291b121e8fc2
+#    image: gcr.io/hasadna-odata/data4dappl-ckan:665c0303ea0962a0f1336e2e22d2291b121e8fc2
+
+#    volumes:
+    # for development, - you might want to mount the extension folder
+    # for production, it should be commented out
+#      - "./ckan/ckanext-odata_org_il:/ckanext-odata_org_il"
+    # the ckan image has default configuration files which connect to db and solr setup by docker compose
+    # if you want to change the settings, you should mount the ckan configuration directory and modify the settings
+    #   - ".docker-data/ckan/config:/etc/ckan/default"

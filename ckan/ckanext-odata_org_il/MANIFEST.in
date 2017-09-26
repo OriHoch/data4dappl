@@ -1,4 +1,1 @@
-include README.rst
-include LICENSE
-include requirements.txt
 recursive-include ckanext/odata_org_il *.html *.json *.js *.less *.css *.mo

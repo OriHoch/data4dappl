@@ -4,6 +4,8 @@ services:
 
   redis:
     image: redis:alpine
+    ports:
+     - "16379:6379"
 
   db:
     image: postgres:9.6.3-alpine
@@ -17,23 +19,17 @@ services:
   solr:
     build: solr
     image: orihoch/data4dappl-solr
+    ports:
+     - "18983:8983"
 
   ckan:
     depends_on:
       - redis
       - db
       - solr
-    build: ckan
     image: orihoch/data4dappl-ckan
     ports:
       - "5000:5000"
-    volumes:
-    # for development, we mount the extension folder
-    # for production, it should be commented out
-      - "./ckan/ckanext-odata_org_il:/ckanext-odata_org_il"
-    # the ckan image has default configuration files which connect to db and solr setup by docker compose
-    # if you want to change the settings, you should mount the ckan configuration directory and modify the settings
-    #   - ".docker-data/ckan/config:/etc/ckan/default"
 
 volumes:
   db:

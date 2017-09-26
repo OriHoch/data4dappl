@@ -17,3 +17,11 @@ If you have an existing ckan installation and just want to install the odata plu
 * Edit the configuration (E.g. /etc/ckan/default/development.ini)
   * add odata_org_il to ckan.plugins
 * restart ckan
+
+## Serving ckan locally, but connecting to docker-compose services
+
+* `docker-compose up -d db redis solr`
+* `bin/recreate_templates.sh`
+* Fomr activated Python 2.7 virtualenv:
+  * `bin/install.sh`
+  * ```paster serve `pwd`/ckan/development-local.ini```

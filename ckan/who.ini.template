@@ -1,3 +1,10 @@
+#
+# {{COMMENT}}
+#
+#
+# Do not edit generated files directly, only edit the source file which is ckan/who.ini.template
+#
+
 [plugin:auth_tkt]
 use = ckan.lib.auth_tkt:make_plugin
 # If no secret key is defined here, beaker.session.secret will be used

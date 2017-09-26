@@ -1,4 +1,11 @@
 #
+# {{COMMENT}}
+#
+#
+# Do not edit generated files directly, only edit the source file which is ckan/development.ini.template
+#
+
+#
 # CKAN - Pylons configuration
 #
 # These are some of the configuration options available for your CKAN
@@ -14,7 +21,7 @@
 [DEFAULT]
 
 # WARNING: *THIS SETTING MUST BE SET TO FALSE ON A PRODUCTION ENVIRONMENT*
-debug = true
+debug = {{CKAN_DEBUG}}
 
 [server:main]
 use = egg:Paste#http
@@ -30,11 +37,19 @@ beaker.session.key = ckan
 # This is the secret token that the beaker library uses to hash the cookie sent
 # to the client. `paster make-config` generates a unique value for this each
 # time it generates a config file.
-beaker.session.secret = j7ENvb8zg5N2Ynk4c0GoXVmqL
+
+##### MODIFY ####
+# python -c "import binascii,os;print(binascii.hexlify(os.urandom(25)))"
+beaker.session.secret = {{CKAN_BEAKER_SESSION_SECRET}}
+##################
 
 # `paster make-config` generates a unique value for this each time it generates
 # a config file.
-app_instance_uuid = cab7d4cf-03bf-4a81-b6ca-cb52c1b842ce
+
+##### MODIFY ####
+# python -c "import uuid;print(uuid.uuid1())"
+app_instance_uuid = {{CKAN_APP_INSTANCE_UUID}}
+##################
 
 # repoze.who config
 who.config_file = %(here)s/who.ini
@@ -45,7 +60,10 @@ who.log_file = %(cache_dir)s/who_log.ini
 # who.timeout = 86400
 
 ## Database Settings
-sqlalchemy.url = postgresql://postgres:123456@db/postgres
+
+##### MODIFY ####
+sqlalchemy.url = {{CKAN_SQLALCHEMY_URL}}
+##################
 
 #ckan.datastore.write_url = postgresql://ckan_default:pass@localhost/datastore_default
 #ckan.datastore.read_url = postgresql://datastore_default:pass@localhost/datastore_default
@@ -56,7 +74,8 @@ ckan.datastore.default_fts_index_method = gist
 
 ## Site Settings
 
-ckan.site_url = http://localhost:5000
+ckan.site_url = {{CKAN_SITE_URL}}
+
 #ckan.use_pylons_response_cleanup_middleware = true
 
 ## Authorization Settings
@@ -71,22 +90,24 @@ ckan.auth.user_delete_organizations = false
 ckan.auth.create_user_via_api = false
 ckan.auth.create_user_via_web = true
 ckan.auth.roles_that_cascade_to_sub_groups = admin
-ckan.default_roles.Package = {"visitor": ["editor"], "logged_in": ["editor"]}
-ckan.default_roles.Group = {"visitor": ["reader"], "logged_in": ["reader"]}
-ckan.default_roles.System = {"visitor": ["reader"], "logged_in": ["reader"]}
-ckan.default_roles.AuthorizationGroup = {"visitor": ["reader"], "logged_in": ["reader"]}
+
+# these settings were in old config file, but don't seem to have effect in new version
+# ckan.default_roles.Package = {"visitor": ["editor"], "logged_in": ["editor"]}
+# ckan.default_roles.Group = {"visitor": ["reader"], "logged_in": ["reader"]}
+# ckan.default_roles.System = {"visitor": ["reader"], "logged_in": ["reader"]}
+# ckan.default_roles.AuthorizationGroup = {"visitor": ["reader"], "logged_in": ["reader"]}
 
 
 ## Search Settings
 
 ckan.site_id = default
-solr_url = http://solr:8983/solr/
+solr_url = {{CKAN_SOLR_URL}}
 
 
 ## Redis Settings
 
 # URL to your Redis instance, including the database to be used.
-ckan.redis.url = redis://redis:6379/0
+ckan.redis.url = {{CKAN_REDIS_URL}}
 
 
 ## CORS Settings
@@ -153,8 +174,9 @@ ckan.feeds.author_link =
 
 ## Storage Settings
 
-ckan.storage_path = /var/lib/ckan
-#ckan.max_resource_size = 10
+# on old server it was: /home/odata/ckan/data
+ckan.storage_path = {{CKAN_STORAGE_PATH}}
+ckan.max_resource_size = {{CKAN_MAX_RESOURCE_SIZE}}
 #ckan.max_image_size = 2
 
 ## Datapusher settings

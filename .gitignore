@@ -8,3 +8,7 @@ ckan-dump
 mnt-nfs
 nginx-secret
 .htpasswd
+who.ini
+development.ini
+development-local.ini
+docker-compose.override.yml
