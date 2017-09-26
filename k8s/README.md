@@ -110,3 +110,5 @@ Used to deploy https://www.odata.org.il/
 * `bin/k8s_update_deployment_image.py`
 * Parameters are deployment name, which should be `ckan`
 * Commit SHA - which is the commit sha you want to deploy from OriHoch/data4dappl repo
+* then, apply the configurations:
+  * `bin/k8s_apply.sh ckan`
