@@ -1,5 +1,9 @@
 # data4dappl
 
+A web-site with additional pipelines and data processing that allow to browse and analyze data received from freedom of information requests sent by a group of Israeli lawyers and organizations.
+
+The site is available here: https://www.odata.org.il/en/
+
 ## Quickstart
 
 This will setup a local ckan instance, including the odata extension and all needed depdencies (solr, db, redis)
