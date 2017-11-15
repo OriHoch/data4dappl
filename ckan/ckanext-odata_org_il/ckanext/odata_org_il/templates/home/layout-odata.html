@@ -12,8 +12,6 @@
 </div>
 <div role="main">
   <div class="container">
-	{% block featured_organization %}
-	  {% snippet 'home/snippets/featured_organization.html' %}
-	{% endblock %}
+	{{ h.get_homepage_snippet() }}
   </div>
 </div>

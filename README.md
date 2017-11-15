@@ -22,6 +22,6 @@ If you have an existing ckan installation and just want to install the odata plu
 
 * `docker-compose up -d db redis solr`
 * `bin/recreate_templates.sh`
-* Fomr activated Python 2.7 virtualenv:
+* From activated Python 2.7 virtualenv:
   * `bin/install.sh`
   * ```paster serve `pwd`/ckan/development-local.ini```

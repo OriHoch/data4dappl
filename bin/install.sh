@@ -6,5 +6,10 @@ fi
 
 pip install -r ckan/requirement-setuptools.txt
 pip install -r ckan/requirements-ckan.txt
-pip install -e 'git+https://github.com/ckan/ckan.git@ckan-2.7.0#egg=ckan'
+if [ -f "${1:-/tmp}/ckan-2.7.2/setup.py" ]; then
+    echo "Trying to install ckan from local copy at ${1:-/tmp}/ckan-2.7.2/setup.py"
+    pip install -e "${1:-/tmp}/ckan-2.7.2"
+else
+    pip install -e 'git+https://github.com/ckan/ckan.git@ckan-2.7.2#egg=ckan'
+fi
 pip install -e ckan/ckanext-odata_org_il/

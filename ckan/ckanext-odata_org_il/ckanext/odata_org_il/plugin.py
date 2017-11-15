@@ -6,6 +6,7 @@ from ckan.lib.plugins import DefaultTranslation
 class Odata_Org_IlPlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.ITranslation)
     plugins.implements(plugins.IConfigurer)
+    plugins.implements(plugins.ITemplateHelpers)
 
     # IConfigurer
 
@@ -16,3 +17,12 @@ class Odata_Org_IlPlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     def i18n_domain(self):
         return 'ckan'
+
+    def get_homepage_snippet(self, *args, **kwargs):
+        # TODO: show last updated datasets
+        return ""
+
+    # Tell CKAN what custom template helper functions this plugin provides,
+    # see the ITemplateHelpers plugin interface.
+    def get_helpers(self):
+        return {'get_homepage_snippet': self.get_homepage_snippet}
