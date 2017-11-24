@@ -1,8 +1,7 @@
 {% set stats = h.get_site_statistics() %}
 
-<div class="box stats">
+<div class="box stats" style="margin-top: 25px">
   <div class="inner">
-    <h3>{{ _('{0} statistics').format(g.site_title) }}</h3>
     <ul>
       {% block stats_group %}
       <li>

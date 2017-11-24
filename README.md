@@ -35,3 +35,13 @@ If you have an existing ckan installation and just want to install the odata plu
 * From activated Python 2.7 virtualenv:
   * `bin/install.sh`
   * ```paster serve `pwd`/ckan/development-local.ini```
+
+## Restoring from backup
+
+Given that you have `ckan-dump/data.tar.gz` and `ckan-dump/db.gz` from k8s backup job:
+
+```
+gunzip -c ckan-dump/db.gz > ckan-dump/db.sql
+paster --plugin=ckan db clean -c `pwd`/ckan/development-local.ini
+paster --plugin=ckan db load ckan-dump/db.sql -c `pwd`/ckan/development-local.ini
+```
