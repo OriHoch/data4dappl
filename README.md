@@ -12,6 +12,12 @@ This will setup a local ckan instance, including the odata extension and all nee
 * `bin/start.sh`
 * `bin/initialize_db.sh`
 
+Rebuild the search index for the full Ckan experience:
+
+```
+docker-compose run ckan search-index rebuild -c /etc/ckan/default/development.ini
+```
+
 ## Installing the ckan extension on an existing ckan project
 
 If you have an existing ckan installation and just want to install the odata plugin:
