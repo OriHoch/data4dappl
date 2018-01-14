@@ -24,7 +24,7 @@ spec:
       labels: {app: ckan}
     spec:
       containers:
-      - image: gcr.io/hasadna-odata/data4dappl-ckan:0850d6038a5b4caec782dfee4117793cd5ea519f
+      - image: gcr.io/hasadna-odata/data4dappl-ckan@sha256:9a4286f9e6653e4c869dda72a6b442d4e861053072fc7c03585950e670d9f730
         name: ckan
         ports:
         - {containerPort: 5000}
