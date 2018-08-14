@@ -2,7 +2,7 @@
   <div class="container">
     {% block footer_content %}
     <div class="row">
-      <div class="span6 footer-links">
+      <div class="span4 footer-links">
         {% block footer_nav %}
           <ul class="unstyled">
             {% block footer_links %}
@@ -19,8 +19,11 @@
           </ul>
         {% endblock %}
       </div>
-      <div class="span2 attribution">
-        <p><strong>בתמיכה של<br/> <a href="http://www.hasadna.org.il/">הסדנא לידע ציבורי</a></strong></p>
+      <div class="span4 attribution">
+        <p><strong>בתמיכה של:<br/>
+          <a href="http://www.hasadna.org.il/">הסדנא לידע ציבורי</a><br/>
+          <a href="https://www.isoc.org.il/">איגוד האינטרנט הישראלי (ISOC-IL)</a>
+        </strong></p>
       </div>
       <div class="span4 attribution">
         {% block footer_attribution %}
