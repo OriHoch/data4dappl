@@ -19,7 +19,7 @@ class Odata_Org_IlPlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     def get_homepage_datasets(self, *args, **kwargs):
         psearch = toolkit.get_action("package_search")
-        psearch_ret = psearch(data_dict={"sort":"timestamp desc","rows":5})
+        psearch_ret = psearch(data_dict={"sort":"metadata_modified desc","rows":5})
         results = psearch_ret['results']
         return results
         # result_str_list = [ "Name: %(name)s<br>Notes: %(notes)s<br>Created:%(metadata_created)s<br>Modified:%(metadata_modified)s<br>URL:%(url)s" % entry for entry in results ]
