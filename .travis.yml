@@ -17,8 +17,8 @@ env:
 services:
   - docker
 script:
-  - curl -s https://raw.githubusercontent.com/hasadna/hasadna-k8s/master/apps_travis_script.sh > .travis.sh
-  - bash .travis.sh script
+  - curl -s https://raw.githubusercontent.com/hasadna/hasadna-k8s/master/apps_travis_script.sh > ckan/.travis.sh
+  - cd ckan && bash .travis.sh script
 deploy:
   skip_cleanup: true
   provider: script
