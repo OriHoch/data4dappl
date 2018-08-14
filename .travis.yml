@@ -1,0 +1,27 @@
+language: bash
+sudo: required
+env:
+  global:
+    - secure: "eabTfbV5PPT6XGxeNDwL4IDBjjVvLhfrJQ2u2RGd+lnwHnApZFgQ2UsOoAdaiq47XxxDXF0aDYlRnaVLlVwU7XzZknbzYGwJ3g1RNfscET3iXCEX6LMFC8osN+Uh5fC0A0l/Es0Vw+f/H78rRSK+ayMQWqjNI76PYFEBGEOP5LKtD5tyTCkuCerZuaMSiYyWThbpkdmPuya/k+IOr5XrgxiOz5b5hIXJ57s8HFWpFKKNn+AE1EDpm1V9QXiqNbIOnlYtngyKroqPFerMgV9nHnIsYgJHFbV6dJ5xxdqDoqpVLQ1s8x3NWze+jB9dNHP8FXxoYF52VXx4gDLk3bQpNB7KA4Xv0KSgkkgCr9ESXdMe/MEaANiTK75SGfWvtBmxvGYclgPt3cbFJHJAJnmgS8ZYrF/La8+UsQQW6k9LmyVxOFH8J547S8eukS8gYjkMrGXjpcnESfVkG8wAMWLjfwgC3Cxyd1cE3s4/0ZAXpnCpbNEg1j9X1ohh60vHFCDm72SEZbrrJIVT8m6YMTIEFUC5NiYH91QDlWvsSxRxR/M0xxTG38yyv6tH1lMnCqC/OgnLmOSthV5nnqQ0Q/WYmjy7Q59wZKBkllPYvfiu3y8QrH6KnV+zulzXS0dvVvQdaLYuwg+tslH6/osRYTmENSORO2C+zKxGdO3Bh2Ybhno="
+    - secure: "QRfRkbJoLmbI8atijLOjb6/ECRUmFUYgsSb/I5twp929e9sANlin5bVc0bqaDl/qSSklpRi9TgZk/Pt3DNfoEvuJeLmCB/datBvvKCcGRY36nGO77e2q/6dsLAMalmHW89WDp3ptFCtFScCN10blBuqKX/JpWyiZ39RX4V2xOyNkvXPL6Pwxee9bLi9Z1ZcR+6t8/cnww+c1E2g67vadXS6R+wQgkIguYvXJGE31Ls9iYx+zjvEk1Z01E8vpgPiyGBPd/dhywXXx48/aor/1svXVPiLcgstEzFSero6XjqRrJyLQbnVbeLOOey9U4ET3gBLczg0XuSKirevAv1y4iWWmo4aws2xJtnHA7FE9VvKYS4RDXLgeqje3xs3OtFHt8xulG5XoxvYMWOY3uP3fh1rEt3IF14rYVtNW3Dcnl2JJ+lAsbN6DxKF0kTdCyHmLMYvgJ3LB1M1mtbjmOBdv40JiG4ZgGyf1cxUxyVYnSMasB0WJTm1JKgniPUqirVJZLhpPXZol8IgMh+bQwLQDTOoSP+xhL9dEG7mCwAW68nwstJ/AL2lBW0roCR/yOfJmrb/trxDEIKxcVemfc8YGi6UgeOrvZenDKT4NTRQ70FcWZ39QzeQDYr8oef6fdoI1OuiMJBRnlKjBjM51OMAca0sJltiQpgebP9B3le1WH0Q="
+    - secure: "Eyk5/WwO15VXyjgPGxSOjwe8yMRe/VAhTvPTX0usZjVivCOHqry/AX67vmGWxt8vPXw6q2fNffR9BDCdvqCX4chMkdQS0VYWyP93nPEFx5USUuq/+so9nkfICmF9+kVpGJQ/c5e5r78IeU1FiiSqtUPeZE4rT7fq2+OiFau00sjWt0+iIXB1Q+gJNWi657GAN8BMcGojYhaiQkemUdBwAmelX7H70O85IHOt1dRx6ymyqqN5t6Vtj7F0fOpVtS69goGqu75gT5iToqrMAMsQxIEXc1DjWfxtoS9x0tYYyYm1Bh26rNj8P4F7KglBw8wo7Rhw69VmM2UcooQbRGKQ8JHUlQOFl2eH1gn7z5ht7TCZ3Zow5bhL8GqV7I/6MSewgvWpcNRwkyOzynfjbh5cKYp8NYaE0yWV76KK2rrdBCLcjLkma3UzTLthoCuCmc2ZKLbehCPXHM/LL1FE9c8v7VIoR3V8uxnp81vmCudmuVqjlKZGM3+d3nijwnbbWKHcOnG9K/WGNRnZmyC3irFnjfX86E7ie/8syd62acq+hWLk6j0zRzgjSp5zI4M1z/tnZA4wltlIa3KraFCJ62JNlKP+nxRstYmr7/27B6YFLNCwQSoX31nDdbVV2rDCk61FuXfHKs9hwV/CEJ70la/0K9bpsleA0cOjeENzKN3r4rk="
+    - K8S_OPS_REPO_BRANCH=master
+    - K8S_OPS_REPO_SLUG=hasadna/hasadna-k8s
+    - DOCKER_IMAGE=orihoch/odata-ckan
+    - DEPLOY_YAML_UPDATE_FILE=values.auto-updated.yaml
+    - DEPLOY_VALUES_CHART_NAME=odata
+    - DEPLOY_VALUES_IMAGE_PROP=ckanImage
+    - DEPLOY_COMMIT_MESSAGE="automatic update of odata-ckan"
+    - DEPLOY_GIT_EMAIL=deployer@odata.org.il
+    - DEPLOY_GIT_USER=odata_deployer
+services:
+  - docker
+script:
+  - curl -s https://raw.githubusercontent.com/hasadna/hasadna-k8s/master/apps_travis_script.sh > .travis.sh
+  - bash .travis.sh script
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: bash .travis.sh deploy
+  on:
+    branch: master
