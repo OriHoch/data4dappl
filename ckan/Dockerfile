@@ -25,6 +25,6 @@ WORKDIR "/usr/lib/ckan/default/src/ckan"
 
 COPY entrypoint.sh /entrypoint.sh
 
-CMD ["serve", "/etc/ckan/default/development.ini"]
+CMD ["server", "start"]
 
 ENTRYPOINT ["/entrypoint.sh"]

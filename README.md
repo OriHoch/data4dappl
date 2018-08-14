@@ -10,27 +10,25 @@ We use minikube to get a running environment which you can then do local develop
 
 Fork and clone [hasadna/hasadna-k8s](https://github.com/hasadna/hasadna-k8s) and follow the [odata chart docs](https://github.com/hasadna/hasadna-k8s/blob/master/charts-external/odata/README.md) to setup a minikube environment.
 
-Access the ckan web-app inside minikube
+The following script builds local docker image, send to minikube and starts port forwarding
 
 ```
+docker build -t odata-ckan ckan &&\
+bin/minikube_patch_image.sh ckan odata-ckan &&\
 bin/minikube_port_forward.sh ckan 5000
 ```
 
 Ckan should be available at http://localhost:5000
 
-You can now make modifications to the code and rebuild the image locally
+To speedup update of the ckan pod, you can set lower termination grace period
 
 ```
-docker build -t odata-ckan ckan
+bin/minikube_kubectl.sh get deployment ckan -o yaml \
+    | sed 's/terminationGracePeriodSeconds: 30/terminationGracePeriodSeconds: 1/g' \
+    | bin/minikube_kubectl.sh replace -f -
 ```
 
-Update the minikube ckan pod with the new image
-
-```
-bin/minikube_patch_image.sh ckan odata-ckan
-```
-
-For faster development flow, you can run ckan locally but connect to the minikube infrastructure
+For even faster development flow, you can run ckan locally but connect to the minikube infrastructure
 
 The following command creates a ckan configuration file and port forwards all the infrastructure ports to localhost
 
