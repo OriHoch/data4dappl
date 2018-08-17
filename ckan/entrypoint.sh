@@ -7,6 +7,10 @@ if [ "${1} ${2}" == "server start" ]; then
     paster serve /etc/ckan/default/development.ini start &&\
     tail -f paster.log
 
+elif [ "${1} ${2}" == "server run" ]; then
+    ! pip install -e /ckanext-odata_org_il && echo failed to install extension && exit 1
+    exec paster serve /etc/ckan/default/development.ini
+
 elif [ "${1} ${2}" == "server restart" ]; then
     paster serve /etc/ckan/default/development.ini restart
 
