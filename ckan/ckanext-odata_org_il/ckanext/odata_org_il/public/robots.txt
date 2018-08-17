@@ -49,6 +49,4 @@ Disallow: /ar
 Disallow: /km
 Disallow: /ne
 Disallow: /th
-
-User-Agent: *
 Crawl-Delay: 10
