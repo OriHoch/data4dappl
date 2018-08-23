@@ -36,6 +36,8 @@ The following command creates a ckan configuration file and port forwards all th
 bin/minikube_local_development.sh
 ```
 
+You can delete the ckan deployment: `kubectl delete deployment ckan`
+
 Keep it running in the background, and start ckan locally from a Python virtualenv
 
 We use [pipenv](https://docs.pipenv.org/) to manage the virtualenv and handle the dependencies
@@ -53,6 +55,12 @@ pipenv run paster serve `pwd`/ckan/development-local.ini
 ```
 
 Ckan is available at http://localhost:5000
+
+Rebuild the search index
+
+```
+pipenv run paster --plugin=ckan search-index -c `pwd`/ckan/development-local.ini rebuild
+```
 
 ## Installing the ckan extension on an existing ckan project
 

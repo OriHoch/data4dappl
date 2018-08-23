@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
 
-echo Modfying configuration file from pod, saving to ckan/development-local.ini
-
-bin/minikube_kubectl.sh get secret etc-ckan-default -o json \
-    | jq -r '.data["development.ini"]' \
-    | base64 -d \
-    | sed -e 's/redis:6379/localhost:6379/g' \
-    | sed -e 's/solr:8983/localhost:8983/g' \
-    | sed -e 's/db\/ckan/localhost\/ckan/g' \
-    > ckan/development-local.ini
-[ "$?" != "0" ] && echo failed to process configuration file && exit 1
+if ! [ -e ckan/development-local.ini ]; then
+    echo Modfying configuration file from pod, saving to ckan/development-local.ini
+    bin/minikube_kubectl.sh get secret etc-ckan-default -o json \
+        | jq -r '.data["development.ini"]' \
+        | base64 -d \
+        | sed -e 's/redis:6379/localhost:6379/g' \
+        | sed -e 's/solr:8983/localhost:8983/g' \
+        | sed -e 's/db\/ckan/localhost\/ckan/g' \
+        > ckan/development-local.ini
+    [ "$?" != "0" ] && echo failed to process configuration file && exit 1
+fi
 
 echo Starting port forwards from minikube services to local ports: 6379, 8983, 5432
 
