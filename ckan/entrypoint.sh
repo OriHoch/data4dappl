@@ -3,8 +3,9 @@
 . ../../bin/activate
 
 if [ "${1} ${2}" == "server start" ]; then
-    paster serve /etc/ckan/default/development.ini start &&\
-    tail -f paster.log
+    gunicorn --paste /etc/ckan/default/development.ini
+    # paster serve /etc/ckan/default/development.ini start &&\
+    # tail -f paster.log
 
 elif [ "${1} ${2}" == "server run" ]; then
     exec paster serve /etc/ckan/default/development.ini
