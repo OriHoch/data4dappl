@@ -4,19 +4,19 @@
   <div class="container" style="margin-top:6px; margin-bottom:6px;">
       {% block stats_group %}
       <div class="col-md-4" style="text-align:center;">
-        <a href="{% url_for "package.search" %}" style="text-align:center;">
+        <a href="{{ h.url_for(controller='package', action='search') }}" style="text-align:center;">
           <div style="font-size:250%;"><strong>{{ h.SI_number_span(stats.dataset_count) }}</strong></div>
           {{ _('dataset') if stats.dataset_count == 1 else _('datasets') }}
         </a>
       </div>
       <div class="col-md-4" style="text-align:center;">
-        <a href="{% url_for "organization.index" %}" style="text-align:center;">
+        <a href="{{ h.url_for(controller='organization', action='index') }}" style="text-align:center;">
           <div style="font-size:250%;"><strong>{{ h.SI_number_span(stats.organization_count) }}</strong></div>
           {{ _('organization') if stats.organization_count == 1 else _('organizations') }}
         </a>
       </div>
       <div class="col-md-4" style="text-align:center;">
-        <a href="{% url_for "group.index" %}" style="text-align:center;">
+        <a href="{{ h.url_for(controller='group', action='index') }}" style="text-align:center;">
           <div style="font-size:250%;"><strong>{{ h.SI_number_span(stats.group_count) }}</strong></div>
           {{ _('group') if stats.group_count == 1 else _('groups') }}
         </a>
