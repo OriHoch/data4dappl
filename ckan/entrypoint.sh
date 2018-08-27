@@ -3,7 +3,7 @@
 . ../../bin/activate
 
 if [ "${1} ${2}" == "server start" ]; then
-    gunicorn --paste /etc/ckan/default/development.ini
+    exec gunicorn --paste /etc/ckan/default/development.ini
     # paster serve /etc/ckan/default/development.ini start &&\
     # tail -f paster.log
 
