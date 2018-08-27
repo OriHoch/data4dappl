@@ -7,6 +7,11 @@
     text-align: right;
 }
 
+.site-search .btn-search {
+    right: auto !important;
+    left: 10px;
+}
+
 .search-form .search-input.search-giant button {
     margin-top: -15px;
     left: 15px;
@@ -35,6 +40,6 @@
     float: right;
 }
 
-.nav-facet .nav-item a span {
+.nav-facet .nav-item a span.item-label {
     padding-right: 15px;
 }

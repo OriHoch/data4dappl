@@ -1,18 +1,5 @@
-{% extends "page.html" %}
-{% set homepage_style = ( g.homepage_style or '1' ) %}
+{% ckan_extends %}
 
-{% block subtitle %}{{ _("Welcome") }}{% endblock %}
-
-{% block maintag %}{% endblock %}
-{% block toolbar %}{% endblock %}
-
-{% block content %}
-  <div class="homepage layout-{{ homepage_style }}">
-    <div class="container">
-      {{ self.flash() }}
-    </div>
-    {% block primary_content %}
-      {% snippet "home/layout-odata.html" %}
-    {% endblock %}
-  </div>
+{% block primary_content %}
+  {% snippet "home/layout-odata.html" %}
 {% endblock %}
