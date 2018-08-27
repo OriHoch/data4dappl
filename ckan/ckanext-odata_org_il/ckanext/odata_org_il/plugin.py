@@ -1,7 +1,6 @@
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 from ckan.lib.plugins import DefaultTranslation
-from .supersede_resource import toolkit_add_resource
 import random
 
 
@@ -12,12 +11,10 @@ class Odata_Org_IlPlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     # IConfigurer
 
-    def update_config(self, config_):
-        toolkit.add_template_directory(config_, 'templates')
-        toolkit.add_public_directory(config_, 'public')
-        toolkit_add_resource('fanstatic', 'odata_org_il',
-                             supersedes={'autocomplete.js': ('base',
-                                                             'modules/autocomplete.js')})
+    def update_config(self, config):
+        toolkit.add_template_directory(config, 'templates')
+        toolkit.add_public_directory(config, 'public')
+        toolkit.add_resource('fanstatic', 'odata_org_il')
 
     def i18n_domain(self):
         return 'ckan'

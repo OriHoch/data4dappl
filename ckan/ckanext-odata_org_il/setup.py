@@ -22,8 +22,5 @@ setup(
     entry_points='''
         [ckan.plugins]
         odata_org_il=ckanext.odata_org_il.plugin:Odata_Org_IlPlugin
-        
-        [paste.app_factory]
-        main = ckanext.odata_org_il.middleware:make_app
     ''',
 )
