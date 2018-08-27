@@ -1,24 +1,30 @@
-FROM orihoch/ckan-2.8.1-fix-autocomplete-keycodes
+FROM ubuntu:16.04
 
-USER root
+RUN apt-get update
+RUN apt-get install -y python-dev libpq-dev python-pip python-virtualenv git-core
 
+RUN mkdir -p /usr/lib/ckan/default
+RUN virtualenv --no-site-packages /usr/lib/ckan/default
+COPY requirement-setuptools.txt /requirement-setuptools.txt
+COPY requirements-ckan.txt /requirements-ckan.txt
+RUN /usr/lib/ckan/default/bin/pip install -r /requirement-setuptools.txt
+RUN /usr/lib/ckan/default/bin/pip install -r /requirements-ckan.txt
+RUN /usr/lib/ckan/default/bin/pip install -e 'git+https://github.com/OriHoch/ckan.git@ckan-2.8.1-fix-autocomplete-keycods#egg=ckan'
+
+# psql is used to restore db from backup
+RUN apt-get update && apt-get install -y postgresql-client
+
+RUN mkdir -p /etc/ckan/default
 COPY development.ini /etc/ckan/default/development.ini
 COPY who.ini /etc/ckan/default/who.ini
 
 COPY ckanext-odata_org_il /ckanext-odata_org_il
-RUN ckan-pip install -e /ckanext-odata_org_il
+RUN /usr/lib/ckan/default/bin/pip install -e /ckanext-odata_org_il
 
-RUN find /ckanext-odata_org_il -name '*.pyc' -delete &&\
-    find /usr/lib/ckan -name '*.pyc' -delete
-
-RUN chown -R ckan:ckan /etc/ckan /usr/lib/ckan /var/lib/ckan
+WORKDIR "/usr/lib/ckan/default/src/ckan"
 
 COPY entrypoint.sh /entrypoint.sh
 
-ENTRYPOINT ["/entrypoint.sh"]
-
-USER ckan
-
-WORKDIR "/usr/lib/ckan/venv"
-
 CMD ["server", "start"]
+
+ENTRYPOINT ["/entrypoint.sh"]

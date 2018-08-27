@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
 
+. ../../bin/activate
+
 if [ "${1} ${2}" == "server start" ]; then
-    ckan-paster serve /etc/ckan/default/development.ini start &&\
+    paster serve /etc/ckan/default/development.ini start &&\
     tail -f paster.log
 
 elif [ "${1} ${2}" == "server run" ]; then
-    exec ckan-paster serve /etc/ckan/default/development.ini
+    exec paster serve /etc/ckan/default/development.ini
 
 elif [ "${1} ${2}" == "server restart" ]; then
-    ckan-paster serve /etc/ckan/default/development.ini restart
+    paster serve /etc/ckan/default/development.ini restart
 
 elif [ "${1}" == "update-ckanext" ]; then
     rm -rf /data4dappl &&\
@@ -19,6 +21,6 @@ elif [ "${1}" == "update-ckanext" ]; then
     /entrypoint.sh server restart
 
 else
-    ckan-paster $*
+    paster $*
 
 fi
