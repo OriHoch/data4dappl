@@ -1,0 +1,47 @@
+# Translations template for ckanext-odata_org_il.
+# Copyright (C) 2018 ORGANIZATION
+# This file is distributed under the same license as the ckanext-odata_org_il
+# project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ckanext-odata_org_il 1535448796.48\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2018-08-28 12:33+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.3.4\n"
+
+#: ckanext/odata_org_il/templates/footer.html:9
+msgid "About odata.org.il"
+msgstr ""
+
+#: ckanext/odata_org_il/templates/footer.html:15
+msgid "odata.org.il API"
+msgstr ""
+
+#: ckanext/odata_org_il/templates/footer.html:23
+msgid "Supported by:"
+msgstr ""
+
+#: ckanext/odata_org_il/templates/footer.html:24
+msgid "The Public Knowledge Workshop"
+msgstr ""
+
+#: ckanext/odata_org_il/templates/footer.html:25
+msgid "The Israeli Internet Association"
+msgstr ""
+
+#: ckanext/odata_org_il/templates/home/layout-odata.html:18
+msgid "Latest updates"
+msgstr ""
+
+#: ckanext/odata_org_il/templates/home/layout-odata.html:21
+msgid "All datasets"
+msgstr ""

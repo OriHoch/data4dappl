@@ -18,7 +18,7 @@ class Odata_Org_IlPlugin(plugins.SingletonPlugin, DefaultTranslation):
         add_resource('fanstatic', 'odata_org_il')
 
     def i18n_domain(self):
-        return 'ckan'
+        return 'ckanext-odata_org_il'
 
     def get_homepage_datasets(self, *args, **kwargs):
         psearch = get_action("package_search")

@@ -71,3 +71,28 @@ If you have an existing ckan installation and just want to install the odata plu
 * Edit the configuration (E.g. /etc/ckan/default/development.ini)
   * add odata_org_il to ckan.plugins
 * restart ckan
+
+## Translations
+
+Translations are done in Transifex:
+
+* Translations of core CKAN strings: https://www.transifex.com/the-public-knowledge-workshop/hasadna-ckan
+* Translations of odata specific strings: https://www.transifex.com/the-public-knowledge-workshop/odata-org-il
+
+### Updating translations code
+
+Changes to core ckan are managed in [hasadna/ckan](https://github.com/hasadna/ckan).
+
+Unique strings which are relevant only for odata are managed locally in the odata-org-il extension.
+
+Update the .pot file - should be done in case of additional / modified strings in the templates
+
+```
+python setup.py extract_messages
+```
+
+Edit the .pot file and remove core ckan strings (which are there only because of extending core ckan templates)
+
+Leave only strings unique to odata
+
+Translate and update the translations under ckan/ckanext/odata_org_il/i18n/(he|ar)/LC_MESSAGES/ckan.(po|mo)

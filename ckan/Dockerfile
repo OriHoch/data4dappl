@@ -9,8 +9,7 @@ COPY requirement-setuptools.txt /requirement-setuptools.txt
 COPY requirements-ckan.txt /requirements-ckan.txt
 RUN /usr/lib/ckan/default/bin/pip install -r /requirement-setuptools.txt
 RUN /usr/lib/ckan/default/bin/pip install -r /requirements-ckan.txt
-# git+https://github.com/OriHoch/ckan.git@ckan-2.8.1-fix-autocomplete-keycods#egg=ckan
-RUN /usr/lib/ckan/default/bin/pip install -e 'git+https://github.com/OriHoch/ckan.git@9c1845e0e63502eef2a698144a9eb8f14ea06324#egg=ckan'
+RUN /usr/lib/ckan/default/bin/pip install -e 'git+https://github.com/hasadna/ckan.git@hasadna-ckan-2.8.1.0#egg=ckan'
 
 # psql is used to restore db from backup
 RUN apt-get update && apt-get install -y postgresql-client

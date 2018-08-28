@@ -6,13 +6,13 @@
         {% block footer_nav %}
           <ul class="list-unstyled">
             {% block footer_links %}
-              <li><a href="{% url_for "home.about" %}">{{ _('About {0}').format(g.site_title) }}</a></li>
+              <li><a href="{% url_for "home.about" %}">{{ _('About odata.org.il') }}</a></li>
             {% endblock %}
           </ul>
           <ul class="list-unstyled">
             {% block footer_links_ckan %}
               {% set api_url = 'http://docs.ckan.org/en/{0}/api/'.format(g.ckan_doc_version) %}
-              <li><a href="{{ api_url }}">ממשק המכונה של מידע לעם</a></li>
+              <li><a href="{{ api_url }}">{{ _('odata.org.il API') }}</a></li>
               <li><a href="http://www.ckan.org/">CKAN Association</a></li>
               <li><a href="http://www.opendefinition.org/okd/"><img src="{% url_for_static "/base/images/od_80x15_blue.png" %}" alt="Open Data"></a></li>
             {% endblock %}
@@ -20,9 +20,9 @@
         {% endblock %}
       </div>
       <div class="col-md-4 attribution">
-        <p><strong>בתמיכה של:<br/>
-          <a href="http://www.hasadna.org.il/">הסדנא לידע ציבורי</a><br/>
-          <a href="https://www.isoc.org.il/">איגוד האינטרנט הישראלי (ISOC-IL)</a>
+        <p><strong>{{ _('Supported by:') }}<br/>
+          <a href="http://www.hasadna.org.il/">{{ _('The Public Knowledge Workshop') }}</a><br/>
+          <a href="https://www.isoc.org.il/">{{ _('The Israeli Internet Association') }} (ISOC-IL)</a>
         </strong></p>
       </div>
       <div class="col-md-4 attribution">
