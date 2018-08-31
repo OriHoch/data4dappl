@@ -3,14 +3,14 @@ from ckan.plugins.toolkit import (add_template_directory, add_public_directory, 
                                   get_action)
 from ckan.lib.plugins import DefaultTranslation
 import random
+from .feed_middleware import FeedMiddleware
 
 
 class Odata_Org_IlPlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.ITranslation)
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.ITemplateHelpers)
-
-    # IConfigurer
+    plugins.implements(plugins.IMiddleware)
 
     def update_config(self, config):
         add_template_directory(config, 'templates')
@@ -43,3 +43,11 @@ class Odata_Org_IlPlugin(plugins.SingletonPlugin, DefaultTranslation):
         return {'homepage_datasets': self.get_homepage_datasets,
                 'homepage_tags': self.get_homepage_tags}
 
+    def make_middleware(self, app, config):
+        from ckan.config.middleware.flask_app import CKANFlask
+        if isinstance(app, CKANFlask):
+            app.wsgi_app = FeedMiddleware(app.wsgi_app)
+        return app
+
+    def make_error_log_middleware(self, app, config):
+        return app
