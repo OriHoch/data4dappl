@@ -43,3 +43,8 @@
 .nav-facet .nav-item a span.item-label {
     padding-right: 15px;
 }
+
+.odatasets h2 {
+    padding-left: auto;
+    padding-right: 15px;
+}

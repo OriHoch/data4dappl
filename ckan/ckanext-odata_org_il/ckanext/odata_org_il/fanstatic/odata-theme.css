@@ -19,10 +19,7 @@
 
 .odatasets h2 {
     font-size:250%;
-    direction:rtl;
-    text-align:right;
-    padding-right: 15px;
-
+    padding-left: 15px;
 }
 
 .odatasets p.alldatasets {
