@@ -2,7 +2,7 @@
   <div class="container">
     {% block footer_content %}
     <div class="row">
-      <div class="col-md-4 footer-links">
+      <div class="col-md-3 footer-links">
         {% block footer_nav %}
           <ul class="list-unstyled">
             {% block footer_links %}
@@ -18,6 +18,10 @@
             {% endblock %}
           </ul>
         {% endblock %}
+      </div>
+      <div class="col-md-1 attribution">
+        <a href="/feeds/dataset.atom" target="_blank"><i class="ckan-icon ckan-icon-feed"></i></a>
+        <a href="https://www.facebook.com/%D7%9E%D7%99%D7%93%D7%A2-%D7%9C%D7%A2%D7%9D-300350757102935/" target="_blank"><i class="ckan-icon ckan-icon-fb"></i></a>
       </div>
       <div class="col-md-4 attribution">
         <p><strong>{{ _('Supported by:') }}<br/>
