@@ -23,6 +23,9 @@ COPY who.ini /etc/ckan/default/who.ini
 COPY ckanext-odata_org_il /ckanext-odata_org_il
 RUN /usr/lib/ckan/default/bin/pip install -e /ckanext-odata_org_il
 
+COPY requirements-odata.txt /
+RUN /usr/lib/ckan/default/bin/pip install -r /requirements-odata.txt
+
 WORKDIR "/usr/lib/ckan/default/src/ckan"
 
 COPY entrypoint.sh /entrypoint.sh
