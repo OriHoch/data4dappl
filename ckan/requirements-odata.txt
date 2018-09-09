@@ -1,1 +1,1 @@
-ckanext-file-uploader-ui >= 0.0.7
+ckanext-file-uploader-ui >= 0.0.8
