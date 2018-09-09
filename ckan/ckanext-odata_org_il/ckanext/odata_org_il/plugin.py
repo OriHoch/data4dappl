@@ -30,12 +30,15 @@ class Odata_Org_IlPlugin(plugins.SingletonPlugin, DefaultTranslation):
         # return "<br>".join(result_str_list)
 
     def get_homepage_tags(self, *args, **kwargs):
-        psearch = get_action("package_search")
-        psearch_ret = psearch(data_dict={'facet.field': ['tags'],
-                                         'facet.limit': 30,
-                                         'rows': 0})
-        tags = psearch_ret['search_facets']['tags']['items']
-        return random.sample(filter(lambda t: t['count'] > 20, tags), 5)
+        try:
+            psearch = get_action("package_search")
+            psearch_ret = psearch(data_dict={'facet.field': ['tags'],
+                                             'facet.limit': 30,
+                                             'rows': 0})
+            tags = psearch_ret['search_facets']['tags']['items']
+            return random.sample(filter(lambda t: t['count'] > 20, tags), 5)
+        except Exception:
+            return []
 
     # Tell CKAN what custom template helper functions this plugin provides,
     # see the ITemplateHelpers plugin interface.
