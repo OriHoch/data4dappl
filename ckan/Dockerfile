@@ -9,7 +9,7 @@ COPY requirement-setuptools.txt /requirement-setuptools.txt
 COPY requirements-ckan.txt /requirements-ckan.txt
 RUN /usr/lib/ckan/default/bin/pip install -r /requirement-setuptools.txt
 RUN /usr/lib/ckan/default/bin/pip install -r /requirements-ckan.txt
-RUN /usr/lib/ckan/default/bin/pip install -e 'git+https://github.com/hasadna/ckan.git@hasadna-ckan-2.8.1.1#egg=ckan'
+RUN /usr/lib/ckan/default/bin/pip install -e 'git+https://github.com/hasadna/ckan.git@hasadna-ckan-2.8.1.2#egg=ckan'
 
 # psql is used to restore db from backup
 RUN apt-get update && apt-get install -y postgresql-client
