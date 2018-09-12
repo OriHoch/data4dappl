@@ -1,9 +1,23 @@
 import ckan.plugins as plugins
 from ckan.plugins.toolkit import (add_template_directory, add_public_directory, add_resource,
-                                  get_action)
+                                  get_action, url_for, config)
 from ckan.lib.plugins import DefaultTranslation
 import random
 from .feed_middleware import FeedMiddleware
+from ckan.controllers.feed import _FixedAtom1Feed
+
+
+class FeedClass(_FixedAtom1Feed):
+
+    def _fix_link(self, link):
+        if 'action/package_read?id=' in link:
+            pkg_id = link.split('=')[1]
+            return config.get('ckan.site_url') + url_for(controller='package', action='read', id=pkg_id)
+
+    def add_item(self, *args, **kwargs):
+        if 'link' in kwargs:
+            kwargs['link'] = self._fix_link(kwargs['link'])
+        super(FeedClass, self).add_item(*args, **kwargs)
 
 
 class Odata_Org_IlPlugin(plugins.SingletonPlugin, DefaultTranslation):
@@ -11,6 +25,7 @@ class Odata_Org_IlPlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.ITemplateHelpers)
     plugins.implements(plugins.IMiddleware)
+    plugins.implements(plugins.IFeed)
 
     def update_config(self, config):
         add_template_directory(config, 'templates')
@@ -54,3 +69,9 @@ class Odata_Org_IlPlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     def make_error_log_middleware(self, app, config):
         return app
+
+    def get_feed_class(self):
+        return FeedClass
+
+    def get_item_additional_fields(self, dataset_dict):
+        return {}
