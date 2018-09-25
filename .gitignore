@@ -9,5 +9,6 @@ mnt-nfs
 nginx-secret
 .htpasswd
 development-local.ini
+development-local.ini*
 docker-compose.override.yml
 .local-config
