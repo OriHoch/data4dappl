@@ -1,35 +1,13 @@
-FROM ubuntu:16.04
+FROM orihoch/hasadna-ckan:v2.8.1.5
 
-RUN apt-get update
-RUN apt-get install -y python-dev libpq-dev python-pip python-virtualenv git-core
+USER root
 
-RUN mkdir -p /usr/lib/ckan/default
-RUN virtualenv --no-site-packages /usr/lib/ckan/default
-COPY requirement-setuptools.txt /requirement-setuptools.txt
-COPY requirements-ckan.txt /requirements-ckan.txt
-RUN /usr/lib/ckan/default/bin/pip install -r /requirement-setuptools.txt
-RUN /usr/lib/ckan/default/bin/pip install -r /requirements-ckan.txt
-RUN /usr/lib/ckan/default/bin/pip install -e 'git+https://github.com/hasadna/ckan.git@hasadna-ckan-2.8.1.3#egg=ckan'
+COPY ckanext-odata_org_il/ $CKAN_VENV/src/ckanext-odata_org_il/
+RUN chown -R ckan:ckan $CKAN_VENV/src/ckanext-odata_org_il
 
-# psql is used to restore db from backup
-RUN apt-get update && apt-get install -y postgresql-client
+USER ckan
 
-RUN /usr/lib/ckan/default/bin/pip install gunicorn
-
-RUN mkdir -p /etc/ckan/default
-COPY development.ini /etc/ckan/default/development.ini
-COPY who.ini /etc/ckan/default/who.ini
-
-COPY ckanext-odata_org_il /ckanext-odata_org_il
-RUN /usr/lib/ckan/default/bin/pip install -e /ckanext-odata_org_il
+RUN ckan-pip install -e $CKAN_VENV/src/ckanext-odata_org_il/
 
 COPY requirements-odata.txt /
-RUN /usr/lib/ckan/default/bin/pip install -r /requirements-odata.txt
-
-WORKDIR "/usr/lib/ckan/default/src/ckan"
-
-COPY entrypoint.sh /entrypoint.sh
-
-CMD ["server", "start"]
-
-ENTRYPOINT ["/entrypoint.sh"]
+RUN ckan-pip install -r /requirements-odata.txt

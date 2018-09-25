@@ -2,9 +2,8 @@
 
 if ! [ -e ckan/development-local.ini ]; then
     echo Modfying configuration file from pod, saving to ckan/development-local.ini
-    bin/minikube_kubectl.sh get secret etc-ckan-default -o json \
-        | jq -r '.data["development.ini"]' \
-        | base64 -d \
+    CKAN_POD_NAME=$(kubectl get pods -l app=ckan -o 'jsonpath={.items[0].metadata.name}')
+    kubectl exec -it $CKAN_POD_NAME cat /etc/ckan/production.ini \
         | sed -e 's/redis:6379/localhost:6379/g' \
         | sed -e 's/solr:8983/localhost:8983/g' \
         | sed -e 's/db\/ckan/localhost\/ckan/g' \

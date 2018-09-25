@@ -30,15 +30,15 @@ bin/minikube_kubectl.sh get deployment ckan -o yaml \
 
 For even faster development flow, you can run ckan locally but connect to the minikube infrastructure
 
-The following command creates a ckan configuration file and port forwards all the infrastructure ports to localhost
+The following command creates a ckan configuration file at ckan/development-local.ini (if it doesn't exist)
+
+It then starts port forwards for all the infrastructure ports to localhost
 
 ```
 bin/minikube_local_development.sh
 ```
 
 You can delete the ckan deployment: `kubectl delete deployment ckan`
-
-Keep it running in the background, and start ckan locally from a Python virtualenv
 
 We use [pipenv](https://docs.pipenv.org/) to manage the virtualenv and handle the dependencies
 
@@ -51,7 +51,7 @@ bin/install.sh
 Start ckan
 
 ```
-pipenv run paster serve `pwd`/ckan/development-local.ini
+pipenv run gunicorn --paste ckan/development-local.ini
 ```
 
 Ckan is available at http://localhost:5000
@@ -59,7 +59,7 @@ Ckan is available at http://localhost:5000
 Rebuild the search index
 
 ```
-pipenv run paster --plugin=ckan search-index -c `pwd`/ckan/development-local.ini rebuild
+pipenv run paster --plugin=ckan search-index -c ckan/development-local.ini rebuild
 ```
 
 ## Installing the ckan extension on an existing ckan project
