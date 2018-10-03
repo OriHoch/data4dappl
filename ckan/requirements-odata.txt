@@ -1,7 +1,7 @@
 ckanext-file-uploader-ui >= 0.1.1
 ckanext-datapackage-pipelines >= 0.0.1
 ckanext-upload-via-email >= 0.0.4
-https://github.com/OriHoch/ckanext-xloader/archive/support-modifying-download-request.zip#egg=ckanext-xloader
+-e git+https://github.com/OriHoch/ckanext-xloader.git@support-modifying-download-request#egg=ckanext-xloader
 messytables==0.15.2
 pdftables>=0.0.4
 Unidecode==1.0.22
