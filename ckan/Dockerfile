@@ -10,4 +10,4 @@ USER ckan
 RUN ckan-pip install -e $CKAN_VENV/src/ckanext-odata_org_il/
 
 COPY requirements-odata.txt /
-RUN ckan-pip install -r /requirements-odata.txt
+RUN ckan-pip install -r /requirements-odata.txt && ckan-pip install -U requests[security]
