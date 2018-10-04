@@ -5,6 +5,8 @@ from ckan.lib.plugins import DefaultTranslation
 import random
 from .feed_middleware import FeedMiddleware
 from ckan.controllers.feed import _FixedAtom1Feed
+from ckanext.datapackage_pipelines.interfaces import IDatapackagePipelines
+import os
 
 
 class FeedClass(_FixedAtom1Feed):
@@ -26,6 +28,7 @@ class Odata_Org_IlPlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.ITemplateHelpers)
     plugins.implements(plugins.IMiddleware)
     plugins.implements(plugins.IFeed)
+    plugins.implements(IDatapackagePipelines)
 
     def update_config(self, config):
         add_template_directory(config, 'templates')
@@ -74,4 +77,10 @@ class Odata_Org_IlPlugin(plugins.SingletonPlugin, DefaultTranslation):
         return FeedClass
 
     def get_item_additional_fields(self, dataset_dict):
+        return {}
+
+    def register_pipelines(self):
+        return 'ckanext-odata_org_il', os.path.join(os.path.dirname(__file__), 'pipelines')
+
+    def get_pipelines_config(self):
         return {}

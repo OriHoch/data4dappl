@@ -1,0 +1,22 @@
+update_foi_offices_resource:
+  schedule:
+    crontab: "1 2 * * *"
+  pipeline:
+  - run: add_resource
+    parameters:
+      name: foi_offices
+      url: https://foi.gov.il/he/free_info/ajax_offices
+      format: json
+  - run: stream_remote_resources
+  - run: ckan.dump.to_ckan
+    parameters:
+      ckan-host: env:CKAN_URL
+      ckan-api-key: env:CKAN_API_KEY
+      stream-resource-headers: 1
+      resource-exists-error-message: הקישור נמצא כבר בשימוש.
+      overwrite_existing: true
+      push_resources_to_datastore: true
+      dataset-properties:
+        name: foi_gov_il_entities_list
+        title: רשימת רשויות מאתר חופש המידע של היחידה הממשלתית לחופש המידע
+        owner_org: justice-o
