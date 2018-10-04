@@ -15,19 +15,21 @@ download_foi_offices:
 
 update_foi_offices_resource:
   dependencies:
-  - pipeline: ./ckanext-odata_org_il/download_foi_offices
+  - ckanext-pipeline: odata_org_il download_foi_offices
   pipeline:
-  - run: load_resource
+  - run: ckanext.load_resource
     parameters:
-      url: /var/lib/ckan/data/pipelines/odata_org_il/foi_offices/datapackage.json
+      path: foi_offices/datapackage.json
+      plugin: odata_org_il
       resources:
         foi_offices:
           name: old_foi_offices
           path: data/old_foi_offices.csv
       required: false
-  - run: load_resource
+  - run: ckanext.load_resource
     parameters:
-      url: /var/lib/ckan/data/pipelines/odata_org_il/new_foi_offices/datapackage.json
+      path: new_foi_offices/datapackage.json
+      plugin: odata_org_il
       resources:
         foi_offices:
           name: foi_offices

@@ -1,5 +1,5 @@
 ckanext-file-uploader-ui >= 0.1.1
-ckanext-datapackage-pipelines >= 0.0.2
+ckanext-datapackage-pipelines >= 0.0.3
 ckanext-upload-via-email >= 0.0.7
 
 -e git+https://github.com/OriHoch/ckanext-xloader.git@support-modifying-download-request#egg=ckanext-xloader
