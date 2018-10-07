@@ -1,4 +1,7 @@
 download_foi_offices:
+  description: >
+    Download list of entities from the justice department foi site.
+    These entities include governmental departments, city council and other organizations / entities
   schedule:
     crontab: "1 2 * * *"
   pipeline:
@@ -14,6 +17,9 @@ download_foi_offices:
       out-path: new_foi_offices
 
 update_foi_offices_resource:
+  description: >
+    Updates the foi offices resource in CKAN if there was a change.
+    It compares the datapackage hash of new and old foi offices package.
   dependencies:
   - ckanext-pipeline: odata_org_il download_foi_offices
   pipeline:
@@ -49,4 +55,52 @@ update_foi_offices_resource:
       dataset-properties:
         name: foi_gov_il_entities_list
         title: רשימת רשויות מאתר חופש המידע של היחידה הממשלתית לחופש המידע
-        owner_org: justice-o
+        owner_org: administrator
+
+update_foi_offices_entities:
+  description: >
+    Creates or updates entities (CKAN groups) for the foi offices, based on group extra field entity_id
+  dependencies:
+  - ckanext-pipeline: odata_org_il update_foi_offices_resource
+  pipeline:
+  - run: load_existing_entities
+#  - run: ckanext.dump_to_path
+#    parameters:
+#      plugin: odata_org_il
+#      out-path: update_foi_offices_existing_entities
+  - run: ckanext.load_resource
+    parameters:
+      plugin: odata_org_il
+      path: foi_offices/datapackage.json
+      resource: foi_offices
+  - run: update_foi_offices_entities
+    parameters:
+      dry-run: true
+  - run: ckanext.dump_to_path
+    parameters:
+      plugin: odata_org_il
+      out-path: update_foi_offices_entities
+
+export_entities_resource:
+  description: >
+    Exports a unified list of all entities with useful metadata for browsing using Datastore
+  schedule:
+    crontab: "1 6 * * *"
+  pipeline:
+  - run: load_existing_entities
+  - run: ckanext.dump_to_path
+    parameters:
+      plugin: odata_org_il
+      out-path: update_foi
+  - run: ckan.dump.to_ckan
+    parameters:
+      ckan-host: env:CKAN_URL
+      ckan-api-key: env:CKAN_API_KEY
+      stream-resource-headers: 1
+      resource-exists-error-message: הקישור נמצא כבר בשימוש.
+      overwrite_existing: true
+      push_resources_to_datastore: true
+      dataset-properties:
+        name: all_entities_list
+        title: רשימת רשויות / קבוצות / יישויות
+        owner_org: administrator
