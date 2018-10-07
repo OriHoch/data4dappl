@@ -8,5 +8,5 @@ su postgres -c "psql -c \"create role ${DATASTORE_RO_USER} with login password '
 echo setting datastore permissions &&\
 bash /db-scripts/templater.sh /db-scripts/datastore-permissions.sql.template | su postgres -c "psql --set ON_ERROR_STOP=1"
 [ "$?" != "0" ] && echo failed to set datastore permissions && exit 1
-echo Great Success
-exit 0
+echo Successfully initialized the datastore DB, continuing to serve the DB
+wait
