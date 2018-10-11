@@ -144,7 +144,9 @@ elif [ "${1}" == "initialize-pipelines" ]; then
     echo "Initializing pipelines sysadmin user ${USER} email ${EMAIL} secret ${SECRET_NAME}"
     if ! kubectl get secret $SECRET_NAME; then
         PASSWORD=`python -c "import binascii,os;print(binascii.hexlify(os.urandom(12)))"`
-        ! CREATE_SYSADMIN_OUTPUT=$(echo "y" | ./kubectl.sh ckan-sysadmin add $USER password=$PASSWORD email=$EMAIL 2>&1) \
+        ! CREATE_SYSADMIN_OUTPUT=$(kubectl exec $(./kubectl.sh get-pod-name ckan) \
+                                   -- bash -c "echo y | ckan-paster --plugin=ckan sysadmin -c /etc/ckan/production.ini \
+                                   add $USER password=$PASSWORD email=$EMAIL 2>/dev/stdout") \
             && echo "${CREATE_SYSADMIN_OUTPUT}" && echo failed to create sysadmin user && exit 1
         ! API_KEY=$(echo "${CREATE_SYSADMIN_OUTPUT}" \
                     | grep -oP "'apikey': u'\K[^']*") \
