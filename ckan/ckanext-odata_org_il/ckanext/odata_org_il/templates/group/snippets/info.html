@@ -26,3 +26,44 @@
     </div>
     {% endblock %}
 {% endif %}
+
+{% block inner %}
+    {{ super() }}
+    <section class="module module-narrow module-shallow">
+        {% set extras = dict(h.sorted_extras(group.extras)) %}
+        {% set email = extras.get('email') %}
+        {% set url = 'https://forms.gov.il/globalData/getsequence/Gethtmlform.aspx'
+                     '?formType=hofeshmeyda@justice.gov.il'
+                     '&Kind='+extras['mmdOfficesTypes_tid']+''
+                     '&Authority='+extras['officenamecode']+''
+                     '&InfoType=5'
+                     '&PaymentType=NULL'
+                     '&infoFormType=1' if extras.get('mmdOfficesTypes_tid') and extras.get('officenamecode') else ''
+        %}
+        {% if email or url %}
+        <h2 class="module-heading">
+            <i class="fa fa-filter"></i>
+            {{ _('Send freedom of information requests') }}
+        </h2>
+        <nav>
+            <ul class="list-unstyled nav nav-simple nav-facet">
+                {% if email %}
+                <li class="nav-item">
+                    <a href="mailto:{{email}}" title="title" target="_blank">
+                        <span class="item-label">{{ _('Send via email') }}</span>
+                    </a>
+                </li>
+                {% endif %}
+                {% if url %}
+                <li class="nav-item">
+                    <a href="{{url}}" title="title" target="_blank">
+                        <span class="item-label">{{ _('Send via online form') }}</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+        <p class="module-footer"></p>
+    </section>
+{% endblock %}
