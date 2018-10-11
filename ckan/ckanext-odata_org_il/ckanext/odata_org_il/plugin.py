@@ -83,4 +83,4 @@ class Odata_Org_IlPlugin(plugins.SingletonPlugin, DefaultTranslation):
         return 'ckanext-odata_org_il', os.path.join(os.path.dirname(__file__), 'pipelines')
 
     def get_pipelines_config(self):
-        return {}
+        return {'foi_groups_matching_resource_id': config.get('ckanext.odata_org_il.foi_groups_matching_resource_id')}

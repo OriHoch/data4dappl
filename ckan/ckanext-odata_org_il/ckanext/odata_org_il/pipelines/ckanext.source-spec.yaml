@@ -16,6 +16,33 @@ download_foi_offices:
       plugin: odata_org_il
       out-path: new_foi_offices
 
+download_foi_offices_xml:
+  description: >
+    Download list of entities from justice department foi site.
+  pipeline:
+  - run: add_foi_offices_xml_resource
+    parameters:
+      filename: foi_offices.xml
+      url: https://foi.gov.il/GetallofficetolistXMLpublished
+  - run: ckanext.dump_to_path
+    parameters:
+      plugin: odata_org_il
+      out-path: new_foi_offices_xml
+
+download_foi_offices_matching_resource:
+  description: >
+    Downloads a resource containing matching between foi offices and ckan groups
+  pipeline:
+  - run: add_ckan_foi_groups_matching_resource
+    parameters:
+      ckan-host: env:CKAN_URL
+      ckan-api-key: env:CKAN_API_KEY
+  - run: stream_remote_resources
+  - run: ckanext.dump_to_path
+    parameters:
+      plugin: odata_org_il
+      out-path: foi_groups_matching
+
 update_foi_offices_resource:
   description: >
     Updates the foi offices resource in CKAN if there was a change.
@@ -62,7 +89,13 @@ update_foi_offices_entities:
     Creates or updates entities (CKAN groups) for the foi offices, based on group extra field entity_id
   dependencies:
   - ckanext-pipeline: odata_org_il update_foi_offices_resource
+  - ckanext-pipeline: odata_org_il download_foi_offices_matching_resource
   pipeline:
+  - run: ckanext.load_resource
+    parameters:
+      path: foi_groups_matching/datapackage.json
+      plugin: odata_org_il
+      resource: foi-groups-matching
   - run: load_existing_entities
 #  - run: ckanext.dump_to_path
 #    parameters:
@@ -74,8 +107,8 @@ update_foi_offices_entities:
       path: foi_offices/datapackage.json
       resource: foi_offices
   - run: update_foi_offices_entities
-    parameters:
-      dry-run: true
+#    parameters:
+#      dry-run: true
   - run: ckanext.dump_to_path
     parameters:
       plugin: odata_org_il

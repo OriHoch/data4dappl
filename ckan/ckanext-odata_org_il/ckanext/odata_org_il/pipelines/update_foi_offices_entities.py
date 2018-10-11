@@ -13,19 +13,33 @@ CKAN_AUTH_HEADERS = {'Authorization': CKAN_API_KEY}
 
 
 def get_existing_entities(resource, existing_entities, stats):
-    existing_entities.update(titles={}, entity_ids={}, groups={})
+    [existing_entities.setdefault(v, {}) for v in ['titles', 'entity_ids', 'groups']]
     for row in resource:
-        stats['existing_entities'] += 1
         entity_id = row['entity_id']
         title = row['title']
         group_id = row['group_id']
+        group_name = row['group_name']
         existing_entities['groups'][group_id] = row['group']
+        existing_entities['groups'][group_name] = row['group']
         if entity_id:
             existing_entities['entity_ids'][entity_id] = group_id
         elif title in existing_entities['titles']:
             existing_entities['titles'][title] = None
         else:
             existing_entities['titles'][title] = group_id
+        yield row
+
+
+def get_foi_groups_matching(resource, existing_entities, stats):
+    existing_entities.setdefault('entity_ids', {})
+    for row in resource:
+        entity_id = row['entity_id']
+        group_id = row['Column3']
+        if entity_id and group_id:
+            stats['foi_groups_matching_entity'] += 1
+            existing_entities['entity_ids'][entity_id] = group_id
+        else:
+            stats['foi_groups_not_matching_entity'] += 1
         yield row
 
 
@@ -49,12 +63,8 @@ def get_foi_offices_resource(resource, existing_entities, stats, dry_run):
                 stats['update_existing_entity_by_title'] += 1
         if group_id:
             extras_dict = {e['key']: e['value'] for e in extras}
-            existing_group = existing_entities['groups'][group_id]
+            existing_group = existing_entities['groups'].get(group_id)
             existing_group_extras_dict = {e['key']: e['value'] for e in existing_group.pop('extras', [])}
-            # logging.info('existing group extras = ')
-            # logging.info(existing_group_extras_dict)
-            # logging.info('foi office extras = ')
-            # logging.info(extras_dict)
             if len([True for k, v in extras_dict.items() if existing_group_extras_dict.get(k) != v]) > 0:
                 logging.info('updating group id {}'.format(group_id))
                 update_type = 'update'
@@ -94,6 +104,9 @@ def main():
         for resource_name, resource in zip(resource_names, resources):
             if resource_name == 'existing_entities':
                 for row in get_existing_entities(resource, existing_entities, stats):
+                    pass
+            elif resource_name == 'foi-groups-matching':
+                for row in get_foi_groups_matching(resource, existing_entities, stats):
                     pass
             elif resource_name == 'foi_offices':
                 yield get_foi_offices_resource(resource, existing_entities, stats, parameters.get('dry-run'))
