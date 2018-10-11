@@ -107,8 +107,10 @@ update_foi_offices_entities:
       path: foi_offices/datapackage.json
       resource: foi_offices
   - run: update_foi_offices_entities
-#    parameters:
-#      dry-run: true
+    parameters:
+    # keep dry-run enabled to prevent automatic update
+    # need to check manually before doing an update
+      dry-run: true
   - run: ckanext.dump_to_path
     parameters:
       plugin: odata_org_il
@@ -137,3 +139,12 @@ export_entities_resource:
         name: all_entities_list
         title: רשימת רשויות / קבוצות / יישויות
         owner_org: administrator
+
+dump_group_datasets:
+  pipeline:
+  - run: load_existing_entities
+  - run: dump_group_datasets
+  - run: ckanext.dump_to_path
+    parameters:
+      plugin: odata_org_il
+      out-path: dump_group_datasets

@@ -71,8 +71,8 @@ def get_foi_offices_resource(resource, existing_entities, stats, dry_run):
                 stats['updated_entities'] += 1
                 extras = [{'key': k, 'value': v} for k, v in extras_dict.items()]
                 if not dry_run:
-                    group_update_res = session.post('{}/api/3/action/group_update'.format(CKAN_URL),
-                                                    json=dict(existing_group, id=group_id, extras=extras)).json()
+                    group_update_res = session.post('{}/api/3/action/group_patch'.format(CKAN_URL),
+                                                    json=dict(id=group_id, extras=extras)).json()
             else:
                 # logging.info('no update needed for group_id {}'.format(group_id))
                 update_type = 'none'
