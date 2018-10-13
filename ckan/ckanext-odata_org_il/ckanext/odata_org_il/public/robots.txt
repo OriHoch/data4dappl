@@ -49,4 +49,5 @@ Disallow: /ar/
 Disallow: /km/
 Disallow: /ne/
 Disallow: /th/
+Disallow: /mk/
 Crawl-Delay: 10
