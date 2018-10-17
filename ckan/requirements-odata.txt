@@ -1,4 +1,4 @@
-ckanext-file-uploader-ui >= 0.1.1
+ckanext-file-uploader-ui >= 0.1.4
 ckanext-datapackage-pipelines >= 0.0.3
 ckanext-upload-via-email >= 0.0.7
 
