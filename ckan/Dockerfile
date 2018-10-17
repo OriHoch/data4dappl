@@ -1,4 +1,4 @@
-FROM orihoch/hasadna-ckan:v2.8.1.5
+FROM uumpa/hasadna-ckan:v2.8.1.7
 
 USER root
 
