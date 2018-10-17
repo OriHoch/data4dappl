@@ -1,4 +1,4 @@
-FROM uumpa/hasadna-ckan:v2.8.1.7a
+FROM uumpa/hasadna-ckan:v2.8.1.7b
 
 USER root
 
