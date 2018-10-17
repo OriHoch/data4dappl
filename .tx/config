@@ -1,0 +1,9 @@
+[main]
+host = https://www.transifex.com
+
+[odata-org-il.ckanext-odata_org_ilpot]
+file_filter = ckan/ckanext-odata_org_il/ckanext/odata_org_il/i18n/<lang>/LC_MESSAGES/ckanext-odata_org_il.po
+source_file = ckan/ckanext-odata_org_il/ckanext/odata_org_il/i18n/ckanext-odata_org_il.pot
+source_lang = en
+type = PO
+

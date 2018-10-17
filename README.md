@@ -95,4 +95,21 @@ Edit the .pot file and remove core ckan strings (which are there only because of
 
 Leave only strings unique to odata
 
-Translate and update the translations under ckan/ckanext/odata_org_il/i18n/(he|ar)/LC_MESSAGES/ckan.(po|mo)
+Translate and update the translations under ckan/ckanext/odata_org_il/i18n/(he|ar)/LC_MESSAGES/ckan.(po|mo) using transifex
+
+Pull updated transifex translations
+
+```
+tx pull -fl he,ar
+```
+
+Compile mo files:
+
+```
+msgfmt -o ckan/ckanext-odata_org_il/ckanext/odata_org_il/i18n/ar/LC_MESSAGES/ckanext-odata_org_il.mo \
+          ckan/ckanext-odata_org_il/ckanext/odata_org_il/i18n/ar/LC_MESSAGES/ckanext-odata_org_il.po &&\
+msgfmt -o ckan/ckanext-odata_org_il/ckanext/odata_org_il/i18n/he/LC_MESSAGES/ckanext-odata_org_il.mo \
+          ckan/ckanext-odata_org_il/ckanext/odata_org_il/i18n/he/LC_MESSAGES/ckanext-odata_org_il.po
+```
+
+Commit
