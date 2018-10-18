@@ -7,9 +7,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: ckanext-odata_org_il 1539274078.9\n"
+"Project-Id-Version: ckanext-odata_org_il 1539859354.45\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-10-11 19:07+0300\n"
+"POT-Creation-Date: 2018-10-18 13:42+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,11 +42,11 @@ msgstr ""
 msgid "Send freedom of information requests"
 msgstr ""
 
-#: ckanext/odata_org_il/templates/group/snippets/info.html:54
+#: ckanext/odata_org_il/templates/group/snippets/info.html:53
 msgid "Send via email"
 msgstr ""
 
-#: ckanext/odata_org_il/templates/group/snippets/info.html:61
+#: ckanext/odata_org_il/templates/group/snippets/info.html:60
 msgid "Send via online form"
 msgstr ""
 
