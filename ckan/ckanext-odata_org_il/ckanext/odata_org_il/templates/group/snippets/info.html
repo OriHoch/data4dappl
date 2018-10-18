@@ -31,14 +31,16 @@
     {{ super() }}
     <section class="module module-narrow module-shallow">
         {% set extras = dict(h.sorted_extras(group.extras)) %}
-        {% set email = extras.get('email') %}
-        {% set url = 'https://forms.gov.il/globalData/getsequence/Gethtmlform.aspx'
+        {% set email = extras.get('override_email', extras.get('email')) %}
+        {% set officenamecode = extras.get('override_officenamecode', extras.get('officenamecode')) %}
+        {% set mmdofficetypeid = extras.get('override_mmdOfficesTypes_tid', extras.get('mmdOfficesTypes_tid')) %}
+        {% set url = extras.get('override_foi_link', 'https://forms.gov.il/globalData/getsequence/Gethtmlform.aspx'
                      '?formType=hofeshmeyda@justice.gov.il'
-                     '&Kind='+extras['mmdOfficesTypes_tid']+''
-                     '&Authority='+extras['officenamecode']+''
+                     '&Kind='+mmdofficetypeid+''
+                     '&Authority='+officenamecode+''
                      '&InfoType=5'
                      '&PaymentType=NULL'
-                     '&infoFormType=1' if extras.get('mmdOfficesTypes_tid') and extras.get('officenamecode') else ''
+                     '&infoFormType=1' if mmdofficetypeid and officenamecode else '')
         %}
         {% if email or url %}
         <h2 class="module-heading">
