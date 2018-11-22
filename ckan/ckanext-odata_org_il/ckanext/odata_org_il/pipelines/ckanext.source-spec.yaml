@@ -83,6 +83,7 @@ update_foi_offices_resource:
         name: foi_gov_il_entities_list
         title: רשימת רשויות מאתר חופש המידע של היחידה הממשלתית לחופש המידע
         owner_org: administrator
+        private: true
 
 update_foi_offices_entities:
   description: >
@@ -139,6 +140,7 @@ export_entities_resource:
         name: all_entities_list
         title: רשימת רשויות / קבוצות / יישויות
         owner_org: administrator
+        private: true
 
 dump_group_datasets:
   pipeline:
