@@ -4,6 +4,7 @@ Disallow: /revision/
 Disallow: /dataset/*/history
 Disallow: /api/
 Disallow: /en/
+Disallow: /en_US/
 Disallow: /pt_BR/
 Disallow: /ja/
 Disallow: /it/
