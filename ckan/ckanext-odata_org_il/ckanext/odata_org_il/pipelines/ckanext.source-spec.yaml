@@ -150,3 +150,51 @@ dump_group_datasets:
     parameters:
       plugin: odata_org_il
       out-path: dump_group_datasets
+
+all_organizations:
+  schedule:
+    crontab: "6 * * * *"
+  pipeline:
+  - run: ckan
+    parameters:
+      action: get
+      obj_type: organizations
+  - run: ckanext.dump_to_path
+    parameters:
+      plugin: odata_org_il
+      out-path: all_organizations
+
+all_groups:
+  schedule:
+    crontab: "6 * * * *"
+  pipeline:
+  - run: ckan
+    parameters:
+      action: get
+      obj_type: groups
+  - run: ckanext.dump_to_path
+    parameters:
+      plugin: odata_org_il
+      out-path: all_groups
+
+create_group_organization_memberships:
+  dependencies:
+  - ckanext-pipeline: odata_org_il all_groups
+  - ckanext-pipeline: odata_org_il all_organizations
+  pipeline:
+  - run: ckanext.load_resource
+    parameters:
+      plugin: odata_org_il
+      path: all_organizations/datapackage.json
+      resource: ckan_organizations
+  - run: ckanext.load_resource
+    parameters:
+      plugin: odata_org_il
+      path: all_groups/datapackage.json
+      resource: ckan_groups
+  - run: get_group_organization_create_member_params
+  - run: ckan
+    parameters:
+      action: create
+      obj_type: member
+

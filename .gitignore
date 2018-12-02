@@ -13,3 +13,6 @@ development-local.ini*
 docker-compose.override.yml
 .local-config
 .dpp
+.checkpoints
+.dfs-checkpoints
+.ipynb_checkpoints
