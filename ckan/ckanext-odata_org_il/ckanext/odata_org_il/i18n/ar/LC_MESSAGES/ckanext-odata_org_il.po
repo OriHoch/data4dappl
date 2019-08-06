@@ -1,8 +1,8 @@
 # Translations template for ckanext-odata_org_il.
-# Copyright (C) 2018 ORGANIZATION
+# Copyright (C) 2019 ORGANIZATION
 # This file is distributed under the same license as the ckanext-odata_org_il
 # project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2019.
 # 
 # Translators:
 # o data <1nonameblog@gmail.com>, 2018
@@ -11,9 +11,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: ckanext-odata_org_il 1539859354.45\n"
+"Project-Id-Version: ckanext-odata_org_il 1565098207.14\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-10-18 13:42+0300\n"
+"POT-Creation-Date: 2019-08-06 16:30+0300\n"
 "PO-Revision-Date: 2018-08-28 09:35+0000\n"
 "Last-Translator: zomerg <zomerg@gmail.com>, 2018\n"
 "Language-Team: Arabic (https://www.transifex.com/the-public-knowledge-workshop/teams/89938/ar/)\n"
@@ -44,15 +44,23 @@ msgstr "ورشة العلم الجماهيرية"
 msgid "The Israeli Internet Association"
 msgstr "جمعية الانترنت الاسرائيلية"
 
-#: ckanext/odata_org_il/templates/group/snippets/info.html:46
+#: ckanext/odata_org_il/templates/header.html:10
+msgid "Zoom In"
+msgstr ""
+
+#: ckanext/odata_org_il/templates/header.html:11
+msgid "Zoom Out"
+msgstr ""
+
+#: ckanext/odata_org_il/templates/group/snippets/info.html:48
 msgid "Send freedom of information requests"
 msgstr "إرسال طلبات حرية المعلومات"
 
-#: ckanext/odata_org_il/templates/group/snippets/info.html:53
+#: ckanext/odata_org_il/templates/group/snippets/info.html:55
 msgid "Send via email"
 msgstr "إرسال الطلب عبر البريد الإلكتروني"
 
-#: ckanext/odata_org_il/templates/group/snippets/info.html:60
+#: ckanext/odata_org_il/templates/group/snippets/info.html:62
 msgid "Send via online form"
 msgstr "إرسال الطلب باستمارة عبر الانترنت"
 
