@@ -14,5 +14,9 @@
     })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
     ga('create', 'UA-105327157-1', 'auto');
     ga('send', 'pageview');
+    (function(w,d){
+      d.body.style.transformOrigin="top right";
+      var c=1.0;var acz=function(s){if(0.5<c+s&&c+s<1.5){c=c+s;d.body.style.transform="scale("+c+")"}};
+      w.aczoomin=function(){acz(.2)};w.aczoomout=function(){acz(-.2)};})(window, document);
   </script>
 {% endblock -%}
