@@ -14,7 +14,7 @@ elif [ "${1}" == "update-ckanext" ]; then
     cp -rf /data4dappl/ckan/ckanext-odata_org_il/* /ckanext-odata_org_il/ &&\
     cp -f /data4dappl/ckan/requirements-odata.txt /ckanext-odata_org_il/ &&\
     rm -rf /data4dappl &&\
-    ../../bin/pip install -e 'git+https://github.com/hasadna/ckan.git@hasadna-ckan-2.8.1.3#egg=ckan' &&\
+    ../../bin/pip install -e 'git+https://github.com/hasadna/ckan.git@2.8.1.9#egg=ckan' &&\
     ../../bin/pip install -e /ckanext-odata_org_il &&\
     ../../bin/pip install -r /ckanext-odata_org_il/requirements-odata.txt &&\
     /entrypoint.sh server restart
