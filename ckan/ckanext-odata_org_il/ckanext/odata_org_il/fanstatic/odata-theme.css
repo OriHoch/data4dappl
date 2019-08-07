@@ -24,3 +24,19 @@
 .odatasets p.alldatasets a {
     font-size: 150%;
 }
+
+.btn-danger {
+    background-color: #CD352D;
+}
+
+.btn-warning {
+    background-color: #AA660E;
+}
+
+.btn-primary {
+    background-color: #2B72AB;
+}
+
+.badge {
+    background-color: #000000;
+}
