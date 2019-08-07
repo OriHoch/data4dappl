@@ -40,3 +40,59 @@
 .badge {
     background-color: #000000;
 }
+
+.label[data-format=tiff], .label[data-format*=tiff] {
+    background-color: #e0051e;
+}
+
+.label[data-format=xls], .label[data-format*=xls] {
+    background-color: #237B48;
+}
+
+.label[data-format=xlsx], .label[data-format*=xlsx] {
+    background-color: #237B48;
+}
+
+.label[data-format=xsl], .label[data-format*=xsl] {
+    background-color: #237B48;
+}
+
+.label[data-format=ics], .label[data-format*=ics] {
+    background-color: #796901;
+}
+
+.label[data-format=csv], .label[data-format*=csv] {
+    background-color: #856A00;
+}
+
+.label[data-format=xml], .label[data-format*=xml] {
+    background-color: #AD5100;
+}
+
+.label[data-format=qgis], .label[data-format*=qgis] {
+    background-color: #AE16D4;
+}
+
+.label[data-format=zip], .label[data-format*=zip] {
+    background-color: #6B6B6B;
+}
+
+.label[data-format=doc], .label[data-format*=doc] {
+    background-color: #5254FF;
+}
+
+.label[data-format=docx], .label[data-format*=docx] {
+    background-color: #5254FF;
+}
+
+.label[data-format=ppt], .label[data-format*=ppt] {
+    background-color: #9A5B0E;
+}
+
+.label[data-format=pptx], .label[data-format*=pptx] {
+    background-color: #9A5B0E;
+}
+
+.dataset-resources li a  {
+    background-color: #000000;
+}
