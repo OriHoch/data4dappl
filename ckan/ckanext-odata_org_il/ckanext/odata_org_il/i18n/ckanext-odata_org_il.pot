@@ -7,9 +7,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: ckanext-odata_org_il 1565250316.23\n"
+"Project-Id-Version: ckanext-odata_org_il 1565252118.11\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-08-08 10:45+0300\n"
+"POT-Creation-Date: 2019-08-08 11:15+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,15 +26,15 @@ msgstr ""
 msgid "odata.org.il API"
 msgstr ""
 
-#: ckanext/odata_org_il/templates/footer.html:27
+#: ckanext/odata_org_il/templates/footer.html:28
 msgid "Supported by:"
 msgstr ""
 
-#: ckanext/odata_org_il/templates/footer.html:28
+#: ckanext/odata_org_il/templates/footer.html:29
 msgid "The Public Knowledge Workshop"
 msgstr ""
 
-#: ckanext/odata_org_il/templates/footer.html:29
+#: ckanext/odata_org_il/templates/footer.html:30
 msgid "The Israeli Internet Association"
 msgstr ""
 
@@ -69,3 +69,8 @@ msgstr ""
 #: ckanext/odata_org_il/templates/package/snippets/package_metadata_fields.html:6
 msgid "Advanced Settings"
 msgstr ""
+
+#: ckanext/odata_org_il/templates/snippets/social.html:5
+msgid "Sharing"
+msgstr ""
+
