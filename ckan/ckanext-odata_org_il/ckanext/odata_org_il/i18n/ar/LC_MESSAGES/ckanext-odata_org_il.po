@@ -11,9 +11,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: ckanext-odata_org_il 1565098207.14\n"
+"Project-Id-Version: ckanext-odata_org_il 1565250316.23\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-08-06 16:30+0300\n"
+"POT-Creation-Date: 2019-08-08 10:45+0300\n"
 "PO-Revision-Date: 2018-08-28 09:35+0000\n"
 "Last-Translator: zomerg <zomerg@gmail.com>, 2019\n"
 "Language-Team: Arabic (https://www.transifex.com/the-public-knowledge-workshop/teams/89938/ar/)\n"
@@ -52,15 +52,15 @@ msgstr "تكبير "
 msgid "Zoom Out"
 msgstr "تصغير "
 
-#: ckanext/odata_org_il/templates/group/snippets/info.html:48
+#: ckanext/odata_org_il/templates/group/snippets/info.html:56
 msgid "Send freedom of information requests"
 msgstr "إرسال طلبات حرية المعلومات"
 
-#: ckanext/odata_org_il/templates/group/snippets/info.html:55
+#: ckanext/odata_org_il/templates/group/snippets/info.html:63
 msgid "Send via email"
 msgstr "إرسال الطلب عبر البريد الإلكتروني"
 
-#: ckanext/odata_org_il/templates/group/snippets/info.html:62
+#: ckanext/odata_org_il/templates/group/snippets/info.html:70
 msgid "Send via online form"
 msgstr "إرسال الطلب باستمارة عبر الانترنت"
 
@@ -71,3 +71,7 @@ msgstr "التحميلات الاخيرة"
 #: ckanext/odata_org_il/templates/home/layout-odata.html:21
 msgid "All datasets"
 msgstr "جميع مجموعة البيانات"
+
+#: ckanext/odata_org_il/templates/package/snippets/package_metadata_fields.html:6
+msgid "Advanced Settings"
+msgstr ""

@@ -88,7 +88,7 @@ Unique strings which are relevant only for odata are managed locally in the odat
 Update the .pot file - should be done in case of additional / modified strings in the templates
 
 ```
-( cd ckan/ckanext-odata_org_il/ckanext && python setup.py extract_messages )
+( cd ckan/ckanext-odata_org_il && python setup.py extract_messages )
 ```
 
 Edit the .pot file and remove core ckan strings (which are there only because of extending core ckan templates)
@@ -98,7 +98,7 @@ Leave only strings unique to odata
 Push the pot file to transifex
 
 ```
-( cd ckan/ckanext-odata_org_il/ckanext && tx push --source )
+( cd ckan/ckanext-odata_org_il && tx push --source )
 ```
 
 Translate and update the translations in transifex
@@ -106,7 +106,7 @@ Translate and update the translations in transifex
 Pull updated transifex translations
 
 ```
-( cd ckan/ckanext-odata_org_il/ckanext && tx pull -fl he,ar )
+( cd ckan/ckanext-odata_org_il && tx pull -fl he,ar )
 ```
 
 Compile mo files:

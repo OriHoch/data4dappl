@@ -7,9 +7,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: ckanext-odata_org_il 1565098207.14\n"
+"Project-Id-Version: ckanext-odata_org_il 1565250316.23\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-08-06 16:30+0300\n"
+"POT-Creation-Date: 2019-08-08 10:45+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,15 +46,15 @@ msgstr ""
 msgid "Zoom Out"
 msgstr ""
 
-#: ckanext/odata_org_il/templates/group/snippets/info.html:48
+#: ckanext/odata_org_il/templates/group/snippets/info.html:56
 msgid "Send freedom of information requests"
 msgstr ""
 
-#: ckanext/odata_org_il/templates/group/snippets/info.html:55
+#: ckanext/odata_org_il/templates/group/snippets/info.html:63
 msgid "Send via email"
 msgstr ""
 
-#: ckanext/odata_org_il/templates/group/snippets/info.html:62
+#: ckanext/odata_org_il/templates/group/snippets/info.html:70
 msgid "Send via online form"
 msgstr ""
 
@@ -64,4 +64,8 @@ msgstr ""
 
 #: ckanext/odata_org_il/templates/home/layout-odata.html:21
 msgid "All datasets"
+msgstr ""
+
+#: ckanext/odata_org_il/templates/package/snippets/package_metadata_fields.html:6
+msgid "Advanced Settings"
 msgstr ""
