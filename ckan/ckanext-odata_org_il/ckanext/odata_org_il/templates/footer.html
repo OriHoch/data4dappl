@@ -19,9 +19,10 @@
           </ul>
         {% endblock %}
       </div>
-      <div class="col-md-1 attribution">
-        <a href="/feeds/dataset.atom" target="_blank"><i class="ckan-icon ckan-icon-feed"></i></a>
-        <a href="https://www.facebook.com/%D7%9E%D7%99%D7%93%D7%A2-%D7%9C%D7%A2%D7%9D-300350757102935/" target="_blank"><i class="ckan-icon ckan-icon-fb"></i></a>
+      <div class="col-md-1 attribution" style="padding:0;">
+        <a href="/feeds/dataset.atom" target="_blank"><img width="21" height="21" src="{% url_for_static "/rss32.png" %}" style="border:1px solid black;"/></a>
+        <a href="https://www.facebook.com/%D7%9E%D7%99%D7%93%D7%A2-%D7%9C%D7%A2%D7%9D-300350757102935/" target="_blank"><img width="21" height="21" src="{% url_for_static "/facebook32.png" %}" style="border:1px solid black;"/></a>
+        <a href="https://twitter.com/odata16" target="_blank"><img width="21" height="21" src="{% url_for_static "/twitter32.png" %}" style="border:1px solid black;"/></a>
       </div>
       <div class="col-md-4 attribution">
         <p><strong>{{ _('Supported by:') }}<br/>
