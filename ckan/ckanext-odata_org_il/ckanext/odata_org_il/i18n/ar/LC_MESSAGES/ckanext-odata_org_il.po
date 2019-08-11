@@ -30,7 +30,7 @@ msgstr "حول odata.org.il"
 
 #: ckanext/odata_org_il/templates/footer.html:15
 msgid "odata.org.il API"
-msgstr ""
+msgstr "odata.org.il API"
 
 #: ckanext/odata_org_il/templates/footer.html:28
 msgid "Supported by:"
@@ -74,8 +74,8 @@ msgstr "جميع مجموعة البيانات"
 
 #: ckanext/odata_org_il/templates/package/snippets/package_metadata_fields.html:6
 msgid "Advanced Settings"
-msgstr ""
+msgstr "إعدادات متقدمة"
 
 #: ckanext/odata_org_il/templates/snippets/social.html:5
 msgid "Sharing"
-msgstr ""
+msgstr "مشاركة"
