@@ -2,6 +2,7 @@ from datapackage_pipelines_ckan.processors.add_ckan_resource import AddCkanResou
 from datapackage_pipelines_ckanext import helpers as ckanext_helpers
 from functools import lru_cache
 from os import environ
+import logging
 
 
 @lru_cache()
@@ -12,7 +13,8 @@ def get_config(key):
 class AddCkanFoiGroupsMatchingResource(AddCkanResource):
 
     def get_parameters(self, parameters):
-        parameters['resource-id'] = get_config('foi_groups_matching_resource_id')
+        logging.info(get_config('foi_groups_matching_resource_id'))
+        parameters['resource-id'] = 'daae5361-969c-45da-b697-c3a50e6e9541'  # get_config('foi_groups_matching_resource_id')
         super(AddCkanFoiGroupsMatchingResource, self).get_parameters(parameters)
 
     def update_ckan_resource(self, resource):

@@ -8,7 +8,10 @@ class FoiOfficesCkanDumper(CkanDumper):
         hashes = {r['name']: r.get('hash') for r in datapackage['resources']}
         self.__needs_update = hashes.get('old_foi_offices') != hashes['foi_offices']
         resource_names = [r['name'] for r in datapackage['resources']]
+        logging.info('resource_names={}'.format(resource_names))
         self.__new_resource_idx = resource_names.index('foi_offices')
+        logging.info('new_resource_ids={}'.format(self.__new_resource_idx))
+        logging.info('needs_update={}'.format(self.__needs_update))
         if self.__needs_update:
             datapackage['resources'] = [r for r in datapackage['resources'] if r['name'] == 'foi_offices']
         else:

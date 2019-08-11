@@ -10,6 +10,7 @@ name = "pypi"
 "70bf3c7" = {file = "https://github.com/OriHoch/datapackage-pipelines/archive/dataflows-http-headers.zip"}
 "6fe1f57" = {file = "https://github.com/OriHoch/datapackage-pipelines-ckan/archive/support-multiple-datasets-headers-translated-error-message.zip"}
 pyyaml = "*"
+jupyterlab = "*"
 
 [requires]
 python_version = "3.6"
