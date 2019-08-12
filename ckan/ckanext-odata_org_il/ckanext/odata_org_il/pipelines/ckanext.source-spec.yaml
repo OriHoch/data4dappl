@@ -1,121 +1,185 @@
-download_foi_offices:
-  description: >
-    Download list of entities from the justice department foi site.
-    These entities include governmental departments, city council and other organizations / entities
-  schedule:
-    crontab: "1 2 * * *"
-  pipeline:
-  - run: add_resource
-    parameters:
-      name: foi_offices
-      url: https://foi.gov.il/he/free_info/ajax_offices
-      format: json
-  - run: stream_remote_resources
-  - run: ckanext.dump_to_path
-    parameters:
-      plugin: odata_org_il
-      out-path: new_foi_offices
+# not relevant after https://github.com/OriHoch/data4dappl/issues/98
+#download_foi_offices:
+#  description: >
+#    Download JSON entities from the justice department foi site.
+#    These entities include governmental departments, city council and other organizations / entities
+#    Currently not used for importing CKAN groups - using the XML entities instead
+#  schedule:
+#    crontab: "1 2 * * *"
+#  pipeline:
+#  - run: add_resource
+#    parameters:
+#      name: foi_offices
+#      url: https://foi.gov.il/he/free_info/ajax_offices
+#      format: json
+#  - run: stream_remote_resources
+#  - run: ckanext.dump_to_path
+#    parameters:
+#      plugin: odata_org_il
+#      out-path: new_foi_offices
 
 download_foi_offices_xml:
   description: >
-    Download list of entities from justice department foi site.
+    Download XML list of entities from justice department foi site.
+    This is the list which is currently used to import into CKAN groups
+    see https://github.com/OriHoch/data4dappl/issues/98
+# updated manually since https://github.com/OriHoch/data4dappl/issues/98
+#  schedule:
+#    crontab: "1 2 * * *"
   pipeline:
   - run: add_foi_offices_xml_resource
     parameters:
-      filename: foi_offices.xml
+      # this can be set to prevent downloading and get from a local file instead
+      # filename: foi_offices.xml
       url: https://foi.gov.il/GetallofficetolistXMLpublished
   - run: ckanext.dump_to_path
     parameters:
       plugin: odata_org_il
       out-path: new_foi_offices_xml
 
-download_foi_offices_matching_resource:
-  description: >
-    Downloads a resource containing matching between foi offices and ckan groups
-  pipeline:
-  - run: add_ckan_foi_groups_matching_resource
-    parameters:
-      ckan-host: env:CKAN_URL
-      ckan-api-key: env:CKAN_API_KEY
-  - run: stream_remote_resources
-  - run: ckanext.dump_to_path
-    parameters:
-      plugin: odata_org_il
-      out-path: foi_groups_matching
+# not relevant after https://github.com/OriHoch/data4dappl/issues/98
+#download_foi_offices_matching_resource:
+#  description: >
+#    Downloads a resource containing manual matching between foi offices and ckan groups
+#    The entity_id column identifies the foi group and the Column3 column identifies the related group id
+#  pipeline:
+#  - run: add_ckan_foi_groups_matching_resource
+#    parameters:
+#      ckan-host: env:CKAN_URL
+#      ckan-api-key: env:CKAN_API_KEY
+#  - run: stream_remote_resources
+#  - run: ckanext.dump_to_path
+#    parameters:
+#      plugin: odata_org_il
+#      out-path: foi_groups_matching
 
-update_foi_offices_resource:
-  description: >
-    Updates the foi offices resource in CKAN if there was a change.
-    It compares the datapackage hash of new and old foi offices package.
-  dependencies:
-  - ckanext-pipeline: odata_org_il download_foi_offices
-  pipeline:
-  - run: ckanext.load_resource
-    parameters:
-      path: foi_offices/datapackage.json
-      plugin: odata_org_il
-      resources:
-        foi_offices:
-          name: old_foi_offices
-          path: data/old_foi_offices.csv
-      required: false
-  - run: ckanext.load_resource
-    parameters:
-      path: new_foi_offices/datapackage.json
-      plugin: odata_org_il
-      resources:
-        foi_offices:
-          name: foi_offices
-          path: data/foi_offices.csv
-  - run: ckanext.dump_to_path
-    parameters:
-      plugin: odata_org_il
-      out-path: foi_offices
-  - run: dump_foi_offices_to_ckan
-    parameters:
-      ckan-host: env:CKAN_URL
-      ckan-api-key: env:CKAN_API_KEY
-      stream-resource-headers: 1
-      resource-exists-error-message: הקישור נמצא כבר בשימוש.
-      overwrite_existing: true
-      push_resources_to_datastore: true
-      dataset-properties:
-        name: foi_gov_il_entities_list
-        title: רשימת רשויות מאתר חופש המידע של היחידה הממשלתית לחופש המידע
-        owner_org: administrator
-        private: true
+# not relevant after https://github.com/OriHoch/data4dappl/issues/98
+#update_foi_offices_resource:
+#  description: >
+#    Updates the foi offices resource in CKAN if there was a change.
+#    It compares the datapackage hash of new and old foi offices package.
+#  dependencies:
+#  - ckanext-pipeline: odata_org_il download_foi_offices
+#  pipeline:
+#  - run: ckanext.load_resource
+#    parameters:
+#      path: foi_offices/datapackage.json
+#      plugin: odata_org_il
+#      resources:
+#        foi_offices:
+#          name: old_foi_offices
+#          path: data/old_foi_offices.csv
+#      required: false
+#  - run: ckanext.load_resource
+#    parameters:
+#      path: new_foi_offices/datapackage.json
+#      plugin: odata_org_il
+#      resources:
+#        foi_offices:
+#          name: foi_offices
+#          path: data/foi_offices.csv
+#  - run: ckanext.dump_to_path
+#    parameters:
+#      plugin: odata_org_il
+#      out-path: foi_offices
+#  - run: dump_foi_offices_to_ckan
+#    parameters:
+#      ckan-host: env:CKAN_URL
+#      ckan-api-key: env:CKAN_API_KEY
+#      stream-resource-headers: 1
+#      resource-exists-error-message: הקישור נמצא כבר בשימוש.
+#      overwrite_existing: true
+#      push_resources_to_datastore: false
+#      dataset-properties:
+#        name: ori_test_foi_gov_il_entities_list
+#        title: בדיקה של אורי - רשימת רשויות מאתר חופש המידע של היחידה הממשלתית לחופש המידע
+#        owner_org: administrator
+#        private: true
 
-update_foi_offices_entities:
-  description: >
-    Creates or updates entities (CKAN groups) for the foi offices, based on group extra field entity_id
-  dependencies:
-  - ckanext-pipeline: odata_org_il update_foi_offices_resource
-  - ckanext-pipeline: odata_org_il download_foi_offices_matching_resource
-  pipeline:
-  - run: ckanext.load_resource
-    parameters:
-      path: foi_groups_matching/datapackage.json
-      plugin: odata_org_il
-      resource: foi-groups-matching
-  - run: load_existing_entities
+# not relevant after https://github.com/OriHoch/data4dappl/issues/98
+#update_foi_offices_xml_resource:
+#  description: >
+#    Updates another the foi offices resource in CKAN if there was a change.
+#    It compares the datapackage hash of new and old foi offices package.
+#  dependencies:
+#  - ckanext-pipeline: odata_org_il download_foi_offices_xml
+#  pipeline:
+#  - run: ckanext.load_resource
+#    parameters:
+#      path: foi_offices_xml/datapackage.json
+#      plugin: odata_org_il
+#      resources:
+#        foi_offices:
+#          name: old_foi_offices
+#          path: data/old_foi_offices.csv
+#      required: false
+#  - run: ckanext.load_resource
+#    parameters:
+#      path: new_foi_offices_xml/datapackage.json
+#      plugin: odata_org_il
+#      resources:
+#        foi_offices_xml:
+#          name: foi_offices
+#          path: data/foi_offices.csv
+#  - run: ckanext.dump_to_path
+#    parameters:
+#      plugin: odata_org_il
+#      out-path: foi_offices_xml
+#  - run: dump_foi_offices_to_ckan
+#    parameters:
+#      ckan-host: env:CKAN_URL
+#      ckan-api-key: env:CKAN_API_KEY
+#      stream-resource-headers: 1
+#      resource-exists-error-message: הקישור נמצא כבר בשימוש.
+#      overwrite_existing: true
+#      push_resources_to_datastore: false
+#      dataset-properties:
+#        name: ori_test_foi_gov_il_xml_entities_list
+#        title: בדיקה של אורי - רשימת רשויות נוספת מאתר חופש המידע של היחידה הממשלתית לחופש המידע
+#        owner_org: administrator
+#        private: true
+
+# not relevant after https://github.com/OriHoch/data4dappl/issues/98
+#update_foi_offices_entities:
+#  description: >
+#    Creates or updates entities (CKAN groups) for the foi offices, based on group extra field entity_id
+#  dependencies:
+#  - ckanext-pipeline: odata_org_il update_foi_offices_resource
+#  - ckanext-pipeline: odata_org_il download_foi_offices_matching_resource
+#  pipeline:
+#  - run: ckanext.load_resource
+#    parameters:
+#      path: foi_groups_matching/datapackage.json
+#      plugin: odata_org_il
+#      resource: foi-groups-matching
+#  - run: load_existing_entities
 #  - run: ckanext.dump_to_path
 #    parameters:
 #      plugin: odata_org_il
 #      out-path: update_foi_offices_existing_entities
-  - run: ckanext.load_resource
-    parameters:
-      plugin: odata_org_il
-      path: foi_offices/datapackage.json
-      resource: foi_offices
-  - run: update_foi_offices_entities
-    parameters:
+#    cache: true
+#  - run: ckanext.load_resource
+#    parameters:
+#      plugin: odata_org_il
+#      path: foi_offices_xml/datapackage.json
+#      resources:
+#        foi_offices:
+#          name: foi_offices_xml
+#          path: data/foi_offices_xml.csv
+#  - run: ckanext.load_resource
+#    parameters:
+#      plugin: odata_org_il
+#      path: foi_offices/datapackage.json
+#      resource: foi_offices
+#  - run: update_foi_offices_entities
+#    parameters:
     # keep dry-run enabled to prevent automatic update
     # need to check manually before doing an update
-      dry-run: true
-  - run: ckanext.dump_to_path
-    parameters:
-      plugin: odata_org_il
-      out-path: update_foi_offices_entities
+#      dry-run: true
+#  - run: ckanext.dump_to_path
+#    parameters:
+#      plugin: odata_org_il
+#      out-path: update_foi_offices_entities
 
 export_entities_resource:
   description: >
@@ -141,6 +205,28 @@ export_entities_resource:
         title: רשימת רשויות / קבוצות / יישויות
         owner_org: administrator
         private: true
+
+export_matching_entities:
+  description: >
+    export a resource containing all existing CKAN groups and all new entities from XML
+    match entities from XML to existing CKAN groups by title
+    add exceptions for specific problematic groups
+    entities from XML which match existing group - will appear in 1 line
+    for each group include all data - both existing and new / updated
+    for updated groups (which were previously updated from json) - include group_id
+  pipeline:
+  - run: load_resource
+    parameters:
+      url: ./new_foi_offices_xml/datapackage.json
+      resource: foi_offices_xml
+  - run: normalize_foi_offices_xml
+  - run: load_existing_entities
+    cache: true
+  - run: match_foi_offices_xml_existing_entities
+  - run: ckanext.dump_to_path
+    parameters:
+      plugin: odata_org_il
+      out-path: export_matching_entities
 
 dump_group_datasets:
   pipeline:
@@ -178,9 +264,9 @@ all_groups:
       out-path: all_groups
 
 create_group_organization_memberships:
-  dependencies:
-  - ckanext-pipeline: odata_org_il all_groups
-  - ckanext-pipeline: odata_org_il all_organizations
+#  dependencies:
+#  - ckanext-pipeline: odata_org_il all_groups
+#  - ckanext-pipeline: odata_org_il all_organizations
   pipeline:
   - run: ckanext.load_resource
     parameters:
