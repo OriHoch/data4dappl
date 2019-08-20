@@ -8,8 +8,8 @@
 Set environment variables (you can get the API key from an admin CKAN user's profile page):
 
 ```
-CKAN_URL=https://www.odata.org.il/
-CKAN_API_KEY=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX 
+export CKAN_URL=https://www.odata.org.il/
+export CKAN_API_KEY=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX 
 ```
 
 Start a bash terminal on a pipelines server docker container with mounting of relevant volumes

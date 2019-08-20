@@ -215,14 +215,26 @@ export_matching_entities:
     for each group include all data - both existing and new / updated
     for updated groups (which were previously updated from json) - include group_id
   pipeline:
-  - run: load_resource
+  - run: ckanext.load_resource
     parameters:
-      url: ./new_foi_offices_xml/datapackage.json
+      plugin: odata_org_il
+      path: new_foi_offices_xml/datapackage.json
       resource: foi_offices_xml
   - run: normalize_foi_offices_xml
   - run: load_existing_entities
     cache: true
+  - run: add_resource
+    parameters:
+      url: https://github.com/OriHoch/data4dappl/files/3519087/match_foi_offices_xml_existing_entities.txt
+      format: csv
+      headers: 1
+      name: matching_groups_entities
+      path: matching_groups_entities.csv
+  - run: stream_remote_resources
+    cache: true
   - run: match_foi_offices_xml_existing_entities
+    parameters:
+      update-groups: false
   - run: ckanext.dump_to_path
     parameters:
       plugin: odata_org_il
