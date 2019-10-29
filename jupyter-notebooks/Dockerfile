@@ -5,11 +5,13 @@ RUN jupyter-nbconvert --to=python "*.ipynb"
 
 FROM frictionlessdata/datapackage-pipelines
 RUN python3 -m pip install ipython
+RUN apk update && apk add bash
 COPY --from=0 /home/jovyan/*.py ./
-COPY ./export_all_groups.sh /etc/periodic/daily/
-RUN chmod +x /etc/periodic/daily/*.sh
+COPY *.sh ./
+COPY crontabs /var/spool/cron/crontabs/root
+RUN chmod +x *.sh
 
 VOLUME ["/pipelines/data"]
-ENV CKAN_API_KET "zzz"
+ENV CKAN_API_KEY "zzz"
 
-ENTRYPOINT crond -f
+ENTRYPOINT crond -f -L /dev/stderr -d 6

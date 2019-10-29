@@ -1,0 +1,4 @@
+# min   hour    day     month   weekday command
+
+# daily at 02:00
+0       2       *       *       *       /pipelines/run_script.sh export all groups
