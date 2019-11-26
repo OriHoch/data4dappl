@@ -6,7 +6,25 @@ The site is available here: https://www.odata.org.il/en/
 
 ## Development Quickstart
 
-We use minikube to get a running environment which you can then do local development on
+#### Using local CKAN instlalation
+
+See the [Installing CKAN 2.8 Documentation](https://docs.ckan.org/en/2.8/maintaining/installing/index.html) to get a local CKAN installed for development. 
+
+For development it's recommended to install CKAN from source.
+
+Install the odata plugin:
+
+* Install dependencies:
+  * `pip install -r /path/to/data4dappl/ckan/requirements-odata.txt`
+* Install the package:
+  * `pip install -e /path/to/data4dappl/ckan/ckanext-odata_org_il`
+* Edit the configuration (E.g. /etc/ckan/default/development.ini)
+  * add odata_org_il to ckan.plugins
+* restart ckan
+
+#### Using Minikube
+
+This method is more complex but allows to get an environment which is almost identical to the production environment.
 
 Fork and clone [hasadna/hasadna-k8s](https://github.com/hasadna/hasadna-k8s) and follow the [odata chart docs](https://github.com/hasadna/hasadna-k8s/blob/master/charts-external/odata/README.md) to setup a minikube environment.
 
@@ -61,16 +79,6 @@ Rebuild the search index
 ```
 pipenv run paster --plugin=ckan search-index -c ckan/development-local.ini rebuild
 ```
-
-## Installing the ckan extension on an existing ckan project
-
-If you have an existing ckan installation and just want to install the odata plugin:
-
-* Install the package (should run inside your ckan installations virtualenv):
-  * `pip install -e 'git+https://github.com/OriHoch/data4dappl.git#egg=ckanext-odata_org_il&subdirectory=ckan/ckanext-odata_org_il'`
-* Edit the configuration (E.g. /etc/ckan/default/development.ini)
-  * add odata_org_il to ckan.plugins
-* restart ckan
 
 ## Translations
 
