@@ -2,11 +2,43 @@
 
 {% block primary_content_inner %}
   <h1>{% block page_heading %}{{ c.group_dict.display_name }}{% endblock %}</h1>
-    <h2>{{ c.query }}</h2>
-
-  {% block group_extras %}
-    {% snippet 'snippets/additional_info.html', extras = h.sorted_extras(c.entities_extras) %}
-  {% endblock %}
+  <table class="table table-striped table-bordered table-condensed" id="related_entities_table">
+    <thead>
+      <tr>
+        <th scope="col">{{ _('source entity') }}</th>
+        <th scope="col">{{ _('related entity') }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for related_group in c.query.search_facets.groups['items'] if related_group.name != c.group_dict.name %}
+        <tr>
+          <th class="dataset-label">{{ c.group_dict.display_name }}</th>
+          <td class="dataset-details">{{ related_group.display_name }} ({{related_group.count}} {{ _('Documents') }}) <a href="javascript:expand_related_groups('{{ related_group.name }}')">{{ _('Expand') }}</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <script>
+    original_group = {{ json.dumps({'name': c.group_dict.name}) | safe }};
+    related_groups = {};
+    {% for related_group in c.query.search_facets.groups['items'] if related_group.name != c.group_dict.name %}
+    related_groups['{{ related_group.name }}'] = {{ json.dumps({'display_name': related_group.display_name}) | safe }};
+    {% endfor %}
+    function expand_related_groups(source_group_id, source_group_display_name) {
+      $.getJSON('/api/3/action/package_search?fq=groups:"'+source_group_id+'"&facet.field=["groups"]&include_private=false&facet.limit=-1&rows=0').then(function(related_query){
+        $.each(related_query.result.search_facets.groups.items, function(_, related_group) {
+          if (related_group.name != original_group_id && related_group.name != source_group_id) {
+            var _table = document.getElementById("related_entities_table");
+            var _row = _table.insertRow(-1);
+            var _sourceCell = _row.insertCell(0);
+            var _relatedCell = _row.insertCell(1);
+            _sourceCell.innerHTML = source_group_display_name;
+            _relatedCell.innerHTML = related_group.display_name + ' (' + related_group.count + ' {{ _('Documents') }}) <a href="expand_related_groups()"></a>';
+          }
+        });
+      })
+    }
+  </script>
 {% endblock %}
 
 {% block secondary_content %}

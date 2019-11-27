@@ -1,5 +1,6 @@
 import ckan.plugins as p
 from ckan.controllers.group import GroupController, model, NotAuthorized, abort, c, render, request, NotFound, get_action
+import json
 
 
 class GroupEntitiesController(GroupController):
@@ -25,7 +26,7 @@ class GroupEntitiesController(GroupController):
         data_dict = {
             'q': q,
             'fq': fq,
-            'include_private': True,
+            'include_private': False,
             'facet.limit': -1,
             'facet.field': ['groups'],
             'rows': 0
@@ -37,7 +38,7 @@ class GroupEntitiesController(GroupController):
             c.entities_extras.append({'key': item['display_name'], 'value': item['count']})
 
         return render('group/entities.html',
-                      extra_vars={'group_type': group_type})
+                      extra_vars={'group_type': group_type, 'json': json})
 
     def _get_group_dict(self, id, include_datasets=False):
         context = {'model': model, 'session': model.Session,
