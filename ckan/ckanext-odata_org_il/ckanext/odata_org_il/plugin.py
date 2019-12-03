@@ -98,4 +98,8 @@ class Odata_Org_IlPlugin(plugins.SingletonPlugin, DefaultTranslation):
                   '/group/entities',  # url to map path to
                   controller='ckanext.odata_org_il.controller:GroupEntitiesController',  # controller
                   action='show_entities')  # controller action (method)
+        m.connect('group_entities_api',  # name of path route
+                  '/group/entities/api',  # url to map path to
+                  controller='ckanext.odata_org_il.controller:GroupEntitiesController',  # controller
+                  action='show_entities_api')  # controller action (method)
         return m
