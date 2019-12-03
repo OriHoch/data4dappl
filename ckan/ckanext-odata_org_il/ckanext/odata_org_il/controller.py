@@ -6,7 +6,7 @@ import json
 class GroupEntitiesController(GroupController):
 
     def show_entities(self):
-        id = request.params.get('id', '')
+        id = request.params.get('name', '')
         group_type = self._ensure_controller_matches_group_type(id)
         context = {'model': model, 'session': model.Session,
                    'user': c.user}
