@@ -71,6 +71,7 @@ class GroupEntitiesController(GroupController):
         c.query = query
         from ckan.common import response
         response.headers['Content-type'] = 'application/json; charset=utf-8'
+        response.headers['Access-Control-Allow-Origin'] = '*'
         return json.dumps({
             'group': {k: v for k, v in c.group_dict.items() if k not in ['users', 'extras', 'packages']},
             'related_groups': query['search_facets']['groups']['items']
