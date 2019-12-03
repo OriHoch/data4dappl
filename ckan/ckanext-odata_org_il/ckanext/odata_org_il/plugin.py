@@ -22,6 +22,13 @@ class FeedClass(_FixedAtom1Feed):
         super(FeedClass, self).add_item(*args, **kwargs)
 
 
+# def group_entities(id):
+#     group_show = toolkit.get_action('group_show')
+#     this ensures current user is authorized to view the group
+    # group = group_show(data_dict={'name_or_id': id})
+    # assert group
+    # return str(group)
+
 class Odata_Org_IlPlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.ITranslation)
     plugins.implements(plugins.IConfigurer)
@@ -29,6 +36,7 @@ class Odata_Org_IlPlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.IMiddleware)
     plugins.implements(plugins.IFeed)
     plugins.implements(IDatapackagePipelines)
+    plugins.implements(plugins.IRoutes, inherit=True)
 
     def update_config(self, config):
         add_template_directory(config, 'templates')
@@ -84,3 +92,14 @@ class Odata_Org_IlPlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     def get_pipelines_config(self):
         return {'foi_groups_matching_resource_id': config.get('ckanext.odata_org_il.foi_groups_matching_resource_id')}
+
+    def before_map(self, m):
+        m.connect('group_entities',  # name of path route
+                  '/group/entities',  # url to map path to
+                  controller='ckanext.odata_org_il.controller:GroupEntitiesController',  # controller
+                  action='show_entities')  # controller action (method)
+        m.connect('group_entities_api',  # name of path route
+                  '/group/entities/api',  # url to map path to
+                  controller='ckanext.odata_org_il.controller:GroupEntitiesController',  # controller
+                  action='show_entities_api')  # controller action (method)
+        return m
