@@ -3,8 +3,9 @@ from ckan.controllers.group import GroupController, model, NotAuthorized, abort,
 import json
 
 
-def _related_groups_iterator(context, groups):
+def _related_groups_iterator(context, groups, source_group_name):
     for group in groups:
+        if group['name'] == source_group_name: continue
         data_dict = {
             'q': '',
             'fq': 'groups:"%s"' % group['name'],
@@ -98,7 +99,7 @@ class GroupEntitiesController(GroupController):
                 group[k] = v
         return json.dumps({
             'group': group,
-            'related_groups': list(_related_groups_iterator(context, query['search_facets']['groups']['items']))
+            'related_groups': list(_related_groups_iterator(context, query['search_facets']['groups']['items'], group['name']))
         }, ensure_ascii=False, indent=2)
 
     def _get_group_dict(self, id, include_datasets=False):
