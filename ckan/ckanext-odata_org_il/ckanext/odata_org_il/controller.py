@@ -3,11 +3,29 @@ from ckan.controllers.group import GroupController, model, NotAuthorized, abort,
 import json
 
 
+def _related_groups_iterator(context, groups):
+    for group in groups:
+        data_dict = {
+            'q': '',
+            'fq': 'groups:"%s"' % group['name'],
+            'include_private': False,
+            'facet.limit': -1,
+            'facet.field': ['groups'],
+            'rows': 0
+        }
+        yield {
+            'name': group['name'],
+            'display_name': group['display_name'],
+            'num_datasets': group['count'],
+            'num_related_groups': len(get_action('package_search')(context, data_dict)['search_facets']['groups']['items'])
+        }
+
+
 class GroupEntitiesController(GroupController):
 
     def show_entities(self):
         id = request.params.get('name', '')
-        group_type = self._ensure_controller_matches_group_type(id)
+        _ = self._ensure_controller_matches_group_type(id)
         context = {'model': model, 'session': model.Session,
                    'user': c.user}
         c.group_dict = self._get_group_dict(id, include_datasets=True)
@@ -42,7 +60,7 @@ class GroupEntitiesController(GroupController):
 
     def show_entities_api(self):
         id = request.params.get('name', '')
-        group_type = self._ensure_controller_matches_group_type(id)
+        _ = self._ensure_controller_matches_group_type(id)
         context = {'model': model, 'session': model.Session,
                    'user': c.user}
         c.group_dict = self._get_group_dict(id, include_datasets=True)
@@ -72,9 +90,15 @@ class GroupEntitiesController(GroupController):
         from ckan.common import response
         response.headers['Content-type'] = 'application/json; charset=utf-8'
         response.headers['Access-Control-Allow-Origin'] = '*'
+        group = {}
+        for extra in c.group_dict['extras']:
+            group[extra['key']] = extra['value']
+        for k, v in c.group_dict.items():
+            if k not in ['users', 'extras', 'packages']:
+                group[k] = v
         return json.dumps({
-            'group': {k: v for k, v in c.group_dict.items() if k not in ['users', 'extras', 'packages']},
-            'related_groups': query['search_facets']['groups']['items']
+            'group': group,
+            'related_groups': list(_related_groups_iterator(context, query['search_facets']['groups']['items']))
         }, ensure_ascii=False, indent=2)
 
     def _get_group_dict(self, id, include_datasets=False):
