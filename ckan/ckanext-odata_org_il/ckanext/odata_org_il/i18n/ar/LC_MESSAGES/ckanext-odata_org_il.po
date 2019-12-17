@@ -11,9 +11,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: ckanext-odata_org_il 1565252118.11\n"
+"Project-Id-Version: ckanext-odata_org_il 1576569582.94\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-08-08 11:15+0300\n"
+"POT-Creation-Date: 2019-12-17 09:59+0200\n"
 "PO-Revision-Date: 2018-08-28 09:35+0000\n"
 "Last-Translator: zomerg <zomerg@gmail.com>, 2019\n"
 "Language-Team: Arabic (https://www.transifex.com/the-public-knowledge-workshop/teams/89938/ar/)\n"
@@ -28,19 +28,19 @@ msgstr ""
 msgid "About odata.org.il"
 msgstr "حول odata.org.il"
 
-#: ckanext/odata_org_il/templates/footer.html:15
+#: ckanext/odata_org_il/templates/footer.html:17
 msgid "odata.org.il API"
 msgstr "odata.org.il API"
 
-#: ckanext/odata_org_il/templates/footer.html:28
+#: ckanext/odata_org_il/templates/footer.html:30
 msgid "Supported by:"
 msgstr "يدعم من قبل"
 
-#: ckanext/odata_org_il/templates/footer.html:29
+#: ckanext/odata_org_il/templates/footer.html:31
 msgid "The Public Knowledge Workshop"
 msgstr "ورشة العلم الجماهيرية"
 
-#: ckanext/odata_org_il/templates/footer.html:30
+#: ckanext/odata_org_il/templates/footer.html:32
 msgid "The Israeli Internet Association"
 msgstr "جمعية الانترنت الاسرائيلية"
 
@@ -51,6 +51,45 @@ msgstr "تكبير "
 #: ckanext/odata_org_il/templates/header.html:11
 msgid "Zoom Out"
 msgstr "تصغير "
+
+#: ckanext/odata_org_il/templates/group/read_base.html:4
+#: ckanext/odata_org_il/templates/header.html:13
+msgid "Groups"
+msgstr ""
+
+#: ckanext/odata_org_il/templates/group/read_base.html:7
+#: ckanext/odata_org_il/templates/header.html:13
+msgid "About"
+msgstr ""
+
+#: ckanext/odata_org_il/templates/group/entities.html:8
+msgid "Documents"
+msgstr ""
+
+#: ckanext/odata_org_il/templates/group/entities.html:9
+#: ckanext/odata_org_il/templates/group/entities.html:26
+msgid "Expand"
+msgstr ""
+
+#: ckanext/odata_org_il/templates/group/entities.html:13
+msgid "source entity"
+msgstr ""
+
+#: ckanext/odata_org_il/templates/group/entities.html:14
+msgid "related entity"
+msgstr ""
+
+#: ckanext/odata_org_il/templates/group/entities.html:15
+msgid "related entity type"
+msgstr ""
+
+#: ckanext/odata_org_il/templates/group/entities.html:16
+msgid "number of related entities"
+msgstr ""
+
+#: ckanext/odata_org_il/templates/group/entities.html:17
+msgid "number of documents"
+msgstr ""
 
 #: ckanext/odata_org_il/templates/group/snippets/info.html:56
 msgid "Send freedom of information requests"
@@ -72,9 +111,13 @@ msgstr "التحميلات الاخيرة"
 msgid "All datasets"
 msgstr "جميع مجموعة البيانات"
 
-#: ckanext/odata_org_il/templates/package/snippets/package_metadata_fields.html:6
-msgid "Advanced Settings"
-msgstr "إعدادات متقدمة"
+#: ckanext/odata_org_il/templates/home/snippets/stats.html:21
+msgid "group"
+msgstr ""
+
+#: ckanext/odata_org_il/templates/home/snippets/stats.html:21
+msgid "groups"
+msgstr ""
 
 #: ckanext/odata_org_il/templates/snippets/social.html:5
 msgid "Sharing"
