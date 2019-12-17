@@ -1,0 +1,46 @@
+{% extends "group/snippets/group_form.html" %}
+
+{#
+As the form is rendered as a seperate page we take advantage of this by
+overriding the form blocks depending on the current context
+#}
+{% block dataset_fields %}
+  {% if action == "edit" %}{{ super() }}{% endif %}
+{% endblock %}
+
+{% block custom_fields %}
+  {%- if action == "edit" -%}
+    {{ super() }}
+  {% else %}
+    {% for i, key in [
+          (0, 'entity_description'),
+          (1, 'entity_secondary_type'),
+          (2, 'entity_main_type'),
+          (3, 'budgetkey_entity_status'),
+          (4, 'budgetkey_entity_goal'),
+          (5, 'budgetkey_entity_kind'),
+          (6, 'budgetkey_entity_type'),
+          (7, 'budgetkey_entity_kind_he'),
+    ] %}{% if key != '' %}
+      <input id="field-extras-{{i}}-key" type="hidden" name="extras__{{i}}__key" value="{{key}}">
+      <div class="form-group control-full">
+        <label class="control-label" for="field-extras-{{i}}-value">{{key}}</label>
+        <div class="controls ">
+          <input id="field-extras-{{i}}-value" type="text" name="extras__{{i}}__value" value="" class="form-control">
+        </div>
+      </div>
+    {% endif %}{% endfor %}
+  {% endif %}
+{% endblock %}
+
+{% block save_text %}
+  {%- if action == "edit" -%}
+    {{ _('Update Group') }}
+  {%- else -%}
+    {{ _('Create Group') }}
+  {%- endif -%}
+{% endblock %}
+
+{% block delete_button %}
+  {% if action == "edit" %}{{ super() }}{% endif %}
+{% endblock %}
