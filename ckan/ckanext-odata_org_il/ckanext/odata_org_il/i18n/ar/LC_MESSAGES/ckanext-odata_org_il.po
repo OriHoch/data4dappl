@@ -55,41 +55,41 @@ msgstr "تصغير "
 #: ckanext/odata_org_il/templates/group/read_base.html:4
 #: ckanext/odata_org_il/templates/header.html:13
 msgid "Groups"
-msgstr ""
+msgstr "الجهات"
 
 #: ckanext/odata_org_il/templates/group/read_base.html:7
 #: ckanext/odata_org_il/templates/header.html:13
 msgid "About"
-msgstr ""
+msgstr "حول"
 
 #: ckanext/odata_org_il/templates/group/entities.html:8
 msgid "Documents"
-msgstr ""
+msgstr "جدولة البيانات"
 
 #: ckanext/odata_org_il/templates/group/entities.html:9
 #: ckanext/odata_org_il/templates/group/entities.html:26
 msgid "Expand"
-msgstr ""
+msgstr "توسيع"
 
 #: ckanext/odata_org_il/templates/group/entities.html:13
 msgid "source entity"
-msgstr ""
+msgstr "الجهة المركزية"
 
 #: ckanext/odata_org_il/templates/group/entities.html:14
 msgid "related entity"
-msgstr ""
+msgstr "جهة مرتبطة"
 
 #: ckanext/odata_org_il/templates/group/entities.html:15
 msgid "related entity type"
-msgstr ""
+msgstr "نوع الجهة المرتبطة"
 
 #: ckanext/odata_org_il/templates/group/entities.html:16
 msgid "number of related entities"
-msgstr ""
+msgstr "عدد الجهات المرتبطة"
 
 #: ckanext/odata_org_il/templates/group/entities.html:17
 msgid "number of documents"
-msgstr ""
+msgstr "عدد المستندات"
 
 #: ckanext/odata_org_il/templates/group/snippets/info.html:56
 msgid "Send freedom of information requests"
@@ -113,11 +113,11 @@ msgstr "جميع مجموعة البيانات"
 
 #: ckanext/odata_org_il/templates/home/snippets/stats.html:21
 msgid "group"
-msgstr ""
+msgstr "الجهة"
 
 #: ckanext/odata_org_il/templates/home/snippets/stats.html:21
 msgid "groups"
-msgstr ""
+msgstr "الجهات"
 
 #: ckanext/odata_org_il/templates/snippets/social.html:5
 msgid "Sharing"
