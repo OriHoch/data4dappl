@@ -9,16 +9,28 @@ $(function () {
     _allRelatedGroupNames.push(''+$('#related_entities_table').data('originalgroupname'));
     var onClickRelatedGroup = function ($tr) {
         var $a = $tr.find('a[data-expanded]');
-        if (!$a.data('expanded')) {
+        if ($a.data('expanded')) {
+            $('#related_entities_table').find('tr').filter(function(_, tr){
+                if ($(tr).data('sourcegroupname') && ('' + $(tr).data('sourcegroupname')) === ('' + $tr.data('relatedgroupname'))) {
+                    if ($(tr).find('a[data-expanded]').data('expanded')) {
+                        onClickRelatedGroup($(tr));
+                    }
+                    return true;
+                }
+            }).remove();
+            $a.data('expanded', false);
+            $a.text('('+ $('#related_entities_table').data('expandlabel') +')');
+        } else {
             $a.data('expanded', 'true');
-            $a.text('Loading...');
+            $a.text($('#related_entities_table').data('loadinglabel') + '...');
             $.getJSON('/group/entities/api?name=' + $tr.data('relatedgroupname') + '&reversed=true').then(function (apires) {
                 var _table = document.getElementById("related_entities_table");
                 var rowIndex = $tr[0].rowIndex+1;
                 $.each(apires.related_groups, function (_, related_group) {
-                    if (_allRelatedGroupNames.indexOf(''+related_group.name) == -1) {
-                        _allRelatedGroupNames.push(''+related_group.name);
+                    // if (_allRelatedGroupNames.indexOf(''+related_group.name) == -1) {
+                    //     _allRelatedGroupNames.push(''+related_group.name);
                         var _row = _table.insertRow(rowIndex);
+                        $(_row).data('sourcegroupname', $tr.data('relatedgroupname'));
                         $(_row).data('relatedgroupname', related_group.name);
                         var _sourceCell = _row.insertCell(0);
                         var _relatedCell = _row.insertCell(1);
@@ -33,9 +45,9 @@ $(function () {
                         $(_row).find('a[data-expanded]').on('click', function () {
                             onClickRelatedGroup($(_row));
                         });
-                    }
+                    // }
                 });
-                $a.remove();
+                $a.text('('+ $('#related_entities_table').data('shrinklabel') +')');
             });
         }
     };

@@ -43,7 +43,7 @@ def _related_groups_iterator(context, groups, source_group_name):
             'name': group['name'],
             'display_name': group['display_name'],
             'num_datasets': group['count'],
-            'num_related_groups': len(get_action('package_search')(context, data_dict)['search_facets']['groups']['items']),
+            'num_related_groups': len(get_action('package_search')(context, data_dict)['search_facets']['groups']['items']) - 1,
             'entity_secondary_type': entity_secondary_type
         }
 

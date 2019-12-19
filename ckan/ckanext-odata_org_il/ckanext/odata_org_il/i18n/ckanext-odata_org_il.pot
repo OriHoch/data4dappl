@@ -7,9 +7,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: ckanext-odata_org_il 1576569582.94\n"
+"Project-Id-Version: ckanext-odata_org_il 1576743711.33\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-12-17 09:59+0200\n"
+"POT-Creation-Date: 2019-12-19 10:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,27 +61,35 @@ msgid "Documents"
 msgstr ""
 
 #: ckanext/odata_org_il/templates/group/entities.html:9
-#: ckanext/odata_org_il/templates/group/entities.html:26
+#: ckanext/odata_org_il/templates/group/entities.html:28
 msgid "Expand"
 msgstr ""
 
-#: ckanext/odata_org_il/templates/group/entities.html:13
-msgid "source entity"
+#: ckanext/odata_org_il/templates/group/entities.html:10
+msgid "Shrink"
 msgstr ""
 
-#: ckanext/odata_org_il/templates/group/entities.html:14
-msgid "related entity"
+#: ckanext/odata_org_il/templates/group/entities.html:11
+msgid "Loading"
 msgstr ""
 
 #: ckanext/odata_org_il/templates/group/entities.html:15
-msgid "related entity type"
+msgid "source entity"
 msgstr ""
 
 #: ckanext/odata_org_il/templates/group/entities.html:16
-msgid "number of related entities"
+msgid "related entity"
 msgstr ""
 
 #: ckanext/odata_org_il/templates/group/entities.html:17
+msgid "related entity type"
+msgstr ""
+
+#: ckanext/odata_org_il/templates/group/entities.html:18
+msgid "number of related entities"
+msgstr ""
+
+#: ckanext/odata_org_il/templates/group/entities.html:19
 msgid "number of documents"
 msgstr ""
 
@@ -116,4 +124,3 @@ msgstr ""
 #: ckanext/odata_org_il/templates/snippets/social.html:5
 msgid "Sharing"
 msgstr ""
-
