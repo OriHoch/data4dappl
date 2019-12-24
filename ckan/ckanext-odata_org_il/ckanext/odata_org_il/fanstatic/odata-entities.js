@@ -10,14 +10,27 @@ $(function () {
     var onClickRelatedGroup = function ($tr) {
         var $a = $tr.find('a[data-expanded]');
         if ($a.data('expanded')) {
+            var deleteGroupNames = [];
             $('#related_entities_table').find('tr').filter(function(_, tr){
                 if ($(tr).data('sourcegroupname') && ('' + $(tr).data('sourcegroupname')) === ('' + $tr.data('relatedgroupname'))) {
+                    if (deleteGroupNames.indexOf(''+$(tr).data('relatedgroupname')) === -1) {
+                        deleteGroupNames.push(''+$(tr).data('relatedgroupname'))
+                    }
                     if ($(tr).find('a[data-expanded]').data('expanded')) {
                         onClickRelatedGroup($(tr));
                     }
                     return true;
                 }
             }).remove();
+            var newRelatedGroupNames = [];
+            $.each(_allRelatedGroupNames, function(_, groupName) {
+                if (deleteGroupNames.indexOf(''+groupName) === -1) {
+                    if (newRelatedGroupNames.indexOf(''+groupName) === -1) {
+                        newRelatedGroupNames.push(''+groupName);
+                    }
+                }
+            });
+            _allRelatedGroupNames = newRelatedGroupNames;
             $a.data('expanded', false);
             $a.text('('+ $('#related_entities_table').data('expandlabel') +')');
         } else {
@@ -26,10 +39,12 @@ $(function () {
             $.getJSON('/group/entities/api?name=' + $tr.data('relatedgroupname') + '&reversed=true').then(function (apires) {
                 var _table = document.getElementById("related_entities_table");
                 var rowIndex = $tr[0].rowIndex+1;
+                var numInsertedRows = 0;
                 $.each(apires.related_groups, function (_, related_group) {
-                    // if (_allRelatedGroupNames.indexOf(''+related_group.name) == -1) {
-                    //     _allRelatedGroupNames.push(''+related_group.name);
+                    if (_allRelatedGroupNames.indexOf(''+related_group.name) === -1) {
+                        _allRelatedGroupNames.push(''+related_group.name);
                         var _row = _table.insertRow(rowIndex);
+                        numInsertedRows ++;
                         $(_row).data('sourcegroupname', $tr.data('relatedgroupname'));
                         $(_row).data('relatedgroupname', related_group.name);
                         var _sourceCell = _row.insertCell(0);
@@ -40,14 +55,21 @@ $(function () {
                         _sourceCell.innerHTML = apires.group.display_name;
                         _relatedCell.innerHTML = '<a href="/group/entities?name=' + related_group.name + '">' + related_group.display_name + '</a>';
                         _relatedTypeCell.innerHTML = '' + related_group.entity_secondary_type;
-                        _numRelatedEntitiesCell.innerHTML = '' + related_group.num_related_groups + ' <a href="javascript:void(0);" data-expanded="false">('+ $(_table).data('expandlabel') +')</a>';
+                        _numRelatedEntitiesCell.innerHTML = '' + related_group.num_related_groups;
+                        if (related_group.num_related_groups > 1) {
+                            _numRelatedEntitiesCell.innerHTML += ' <a href="javascript:void(0);" data-expanded="false">('+ $(_table).data('expandlabel') +')</a>';
+                        }
                         _numRelatedDocumentsCell.innerHTML = '' + related_group.num_datasets;
                         $(_row).find('a[data-expanded]').on('click', function () {
                             onClickRelatedGroup($(_row));
                         });
-                    // }
+                    }
                 });
-                $a.text('('+ $('#related_entities_table').data('shrinklabel') +')');
+                if (numInsertedRows > 0) {
+                    $a.text('('+ $('#related_entities_table').data('shrinklabel') +')');
+                } else {
+                    $a.remove();
+                }
             });
         }
     };

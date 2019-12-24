@@ -38,7 +38,7 @@
           <th class="dataset-label">{{ c.group_dict.display_name }}</th>
           <td class="dataset-details"><a href="/group/entities?name={{related_group.name}}">{{ related_group.display_name }}</a></td>
           <td class="dataset-details">{{ related_group.entity_secondary_type }}</td>
-          <td class="dataset-details">{{related_group.num_related_groups}} <a href="javascript:void(0);" data-expanded="false">({{ _('Expand') }})</a></td>
+          <td class="dataset-details">{{related_group.num_related_groups}}{% if related_group.num_related_groups > 1 %} <a href="javascript:void(0);" data-expanded="false">({{ _('Expand') }})</a>{% endif %}</td>
           <td class="dataset-details">{{related_group.num_datasets}}</td>
         </tr>
       {% endfor %}

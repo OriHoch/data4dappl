@@ -3,13 +3,24 @@ from ckan.controllers.group import GroupController, model, NotAuthorized, abort,
 import json
 
 
+def _related_groups_filter(context, groups, source_group_name):
+    for group in groups:
+        group['num_new_related_groups'] = 0
+        for related_group in group['related_groups']:
+            if related_group not in context['all_group_names']:
+                group['num_new_related_groups'] += 1
+        yield group
+
+
 def _related_groups_sorted(context, groups, source_group_name, reversed=False):
     return list(sorted(_related_groups_iterator(context, groups, source_group_name),
                        key=lambda g: g['num_related_groups'], reverse=not reversed))
 
 
 def _related_groups_iterator(context, groups, source_group_name):
+    context['all_group_names'] = set()
     for group in groups:
+        context['all_group_names'].add(group['name'])
         if group['name'] == source_group_name:
             continue
         data_dict = {
@@ -39,11 +50,13 @@ def _related_groups_iterator(context, groups, source_group_name):
         entity_secondary_type = unicode(entity_secondary_type).lower().strip()
         if entity_secondary_type == 'none':
             entity_secondary_type = ''
+        related_groups = get_action('package_search')(context, data_dict)['search_facets']['groups']['items']
         yield {
             'name': group['name'],
             'display_name': group['display_name'],
             'num_datasets': group['count'],
-            'num_related_groups': len(get_action('package_search')(context, data_dict)['search_facets']['groups']['items']) - 1,
+            'num_related_groups': len(related_groups) - 1,
+            'related_groups': [group['name'] for group in related_groups],
             'entity_secondary_type': entity_secondary_type
         }
 
@@ -78,10 +91,10 @@ class GroupEntitiesController(GroupController):
                       extra_vars={
                           'group_type': group_type,
                           'json': json,
-                          'related_groups': _related_groups_sorted(
+                          'related_groups': _related_groups_filter(context, _related_groups_sorted(
                               context,
                               query['search_facets']['groups']['items'], c.group_dict['name']
-                          )
+                          ), c.group_dict['name'])
                       })
 
     def show_entities_api(self):
@@ -122,7 +135,13 @@ class GroupEntitiesController(GroupController):
                 group[k] = v
         return json.dumps({
             'group': group,
-            'related_groups': _related_groups_sorted(context, query['search_facets']['groups']['items'], group['name'], reversed=reversed == 'true')
+            'related_groups': list(_related_groups_filter(
+                context, _related_groups_sorted(
+                    context, query['search_facets']['groups']['items'],
+                    group['name'],
+                    reversed=reversed == 'true'
+                ), group['name']
+            ))
         }, ensure_ascii=False, indent=2)
 
     def _get_group_dict(self, id, include_datasets=False):
