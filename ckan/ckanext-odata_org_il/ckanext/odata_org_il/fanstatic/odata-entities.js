@@ -80,132 +80,137 @@ $(function () {
     });
 });
 
-$(function() {
-    var svg = d3.select("svg");
-    var g 	= svg.append("g");
-    var links_class = g.append('g').attr('class', 'links');
-    var nodes_class = g.append('g').attr('class', 'nodes');
+function api_url(param) {
+    return "/group/entities/api?name=" + param;
+}
 
-    var width  = svg.attr("width"),
-        height = svg.attr("height");
+function redraw(){
+    s.killForceAtlas2();
+    s.startForceAtlas2({
+        worker: true
+    });
+    setTimeout(() => { s.stopForceAtlas2() }, 400);
+    s.refresh();
+}
+
+function highlight_path(src,dest){
+    nodes = s.graph.astar(src, dest);
+    if (typeof nodes == "undefined") return false;
+
+    // first clear all highlit paths
+    _.each(s.graph.edges(), function (e) { e.color = colors.edge });
+    _.each(s.graph.nodes(), function (n) { n.color = n.has_groups ? colors.full_node : colors.hollow_node });
+
+    for (var i = 0; i < nodes.length; i++) {
+        var n = _.findIndex(s.graph.nodes(), {
+            id: nodes[i].id,
+        })
+        s.graph.nodes()[n].color = colors.lit_node;
 
 
-    var nodes = [];
-    var links = [];
-
-    var center_node;
-
-    var simulation = d3.forceSimulation(nodes)
-        .force('charge', d3.forceManyBody().strength(-20))
-        .force('center', d3.forceCenter(width / 2, height / 2))
-        .force('collision', d3.forceCollide().radius(30))
-        .force('link', d3.forceLink().id(function (d) { return d.id }).links(links))
-        .on('tick', render);
-
-
-    // why isn't this part of remove_node? because we actually want to keep the original node.
-    // remove_node is really just a helper
-    function remove_children_nodes(node){
-        var children = nodes.filter(function(n){ return n.parent == node.id});
-        return children.length == 0 ? false : children.forEach(function(n) { remove_children_nodes(n) ; remove_node(n)});
+        if (i == nodes.length-1) continue;
+        var e = _.findIndex(s.graph.edges(), {
+            source: nodes[i].id,
+            target: nodes[i + 1].id
+        })
+        s.graph.edges()[e].color = colors.lit_edge;
     }
+    s.refresh();
 
-    function remove_node(node){
-        links = _.reject(links, function(l) {return (l.source == node || l.target == node) });
-        nodes = _.reject(nodes, function(n) {return (n == node || n.parent == node) })
-        simulation.nodes(nodes);
-        simulation.force('link', d3.forceLink().id(function (d) { return d.id }).links(links))
-        simulation.restart();
-    }
+}
 
-    function center_on_node(node){
-        center_node = node;
 
-        var dcx = (width / 2 - node.x);
-        var dcy = (height / 2 - node.y);
-        g.transition().attr("transform", "translate(" + dcx + "," + dcy + ")");
+function load_nodes_under(node_id) {
+    $.getJSON(api_url(node_id), function (odata) {
+        var main_node = odata.group;
+        var nodes = odata.related_groups;
 
-        simulation.force('center', d3.forceCenter(center_node.x, center_node.y))
-        simulation.alpha(0.1).restart();
 
-        return true;
-    }
+        if (typeof s.graph.nodes(main_node.name) == "undefined") {
+            s.graph.addNode({
+                id: main_node.name,
+                label: main_node.display_name,
+                x: 0,
+                y: 0,
+                type: 'circle',
+                borderColor: colors.border,
+                size: 2,
+                color: main_node.name == src_node ? colors.lit_node : colors.full_node,
+                has_groups: main_node.num_new_related_groups
+            })
+        }
 
-    function toggle_node(node){
-        children = _.where(nodes, {parent:node.id});
-        return children.length > 0 ? remove_children_nodes(node) : load_nodes_under(node.id);
-    }
+        nodes.forEach(function (n) {
+            if (typeof s.graph.nodes(n.name) == "undefined") {
+                s.graph.addNode({
+                    id: n.name,
+                    label: n.display_name,
+                    x: Math.random(),
+                    y: Math.random(),
+                    type: 'circle',
+                    borderColor: colors.border,
+                    size: n.num_new_related_groups > 0 ? 2 : 1,
+                    color: n.num_new_related_groups > 0 ? colors.full_node : colors.hollow_node,
+                    has_groups: n.num_new_related_groups > 0
+                });
+            }
 
-    function node_exists(node){
-        return (_.findWhere(nodes, {id:node.id}) || false);
-    }
-
-    function add_node(new_node, parent=false){
-        exists = node_exists(new_node);
-        if (exists) return exists;
-
-        i = nodes.push(new_node);
-        if (parent) links.push({ source: parent.id, target: new_node.id});
-
-        simulation.nodes(nodes);
-        // simulation.force('link', d3.forceLink().id(function (d) { return d.id }).links(links))
-        // simulation.alpha(1).restart();
-
-        // console.log("NEW:", nodes[i-1]);
-        return nodes[i-1];
-    }
-
-    function render() {
-        var n = d3.select('.nodes')
-            .selectAll('text')
-            .data(nodes)
-
-        n.enter()
-            .append('text')
-            .merge(n)
-            .on('click', function (d) { return center_on_node(d) })
-            .on('click', function (d) { return toggle_node(d) })
-            .text(function (d) { return d.display_name })
-            .style('font-size', function (d) { return d.id == center_node.id ? '20px' : '10px' })
-            .attr('x', function (d) { return d.x; })
-            .attr('y', function (d) { return d.y; });
-
-        n.exit().remove()
-
-        var l = d3.select('.links')
-            .selectAll('line')
-            .data(links)
-
-        l.enter()
-            .append('line')
-            .merge(l)
-            .attr('x1', function (d) { return d.source.x })
-            .attr('y1', function (d) { return d.source.y })
-            .attr('x2', function (d) { return d.target.x })
-            .attr('y2', function (d) { return d.target.y })
-
-        l.exit().remove()
-
-    }
-
-    function api_url(param){
-        return "https://www.odata.org.il/group/entities/api?name=" + param;
-    }
-
-    function load_nodes_under(node_id){
-        console.log("load_nodes_under:", node_id);
-        d3.json(api_url(node_id), function(odata){
-            odata.group.id = odata.group.name;
-            var new_center = add_node(odata.group, center_node ? center_node : false);
-            center_on_node(new_center);
-
-            odata.related_groups.forEach(function (g) {
-                g.id = g.name;
-                add_node(g, new_center);
-            });
-
+            s.graph.addEdge({
+                    id: main_node.name + '-' + n.name,
+                    source: main_node.name,
+                    target: n.name,
+                    color: colors.edge
+            })
         });
-    }
 
-    load_nodes_under($('#related_entities_table').data('originalgroupname'));
+        redraw();
+        highlight_path(src_node, main_node.name);
+    });
+}
+
+
+var colors = {
+    border: '#333',
+    edge  : '#ccc',
+    hollow_node : '#eee',
+    full_node   : '#bbb',
+    lit_node    : '#c54',
+    lit_edge    : '#c54'
+}
+
+var s = new sigma({
+    renderers: [
+        {
+            container: document.getElementById('container'),
+            type: sigma.renderers.canvas,
+        }
+    ]
 });
+var cam = s.cameras[0];
+
+s.settings('drawLabels', true);
+s.settings('scalingMode', 'inside');
+s.settings('sideMargin', 1);
+
+s.bind("clickNode", function (n) {
+    if (n.data.node.has_groups > 0)
+        load_nodes_under(n.data.node.id)
+});
+
+var listener = s.configNoverlap({
+    nodes : s.graph.nodes()
+});
+
+var dragListener = new sigma.plugins.dragNodes(s, s.renderers[0]);
+
+// url_params = window.location.search.substring(1).split('&');
+// var src_node = url_params[0];
+// for now, allow only full screen
+// var full_screen = true; //(url_params[1] == 'fullscreen') || false;
+
+// if (!full_screen){
+//     document.querySelector('#fullscreen').innerHTML = '<a href="?'+src_node+'&fullscreen" target="_blank">מסך מלא</a>';
+// }
+
+src_node = $('#related_entities_table').data('originalgroupname');
+load_nodes_under(src_node);
