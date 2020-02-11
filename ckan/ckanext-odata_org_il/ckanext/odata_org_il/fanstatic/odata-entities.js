@@ -192,6 +192,10 @@ s.settings('drawLabels', true);
 s.settings('scalingMode', 'inside');
 s.settings('sideMargin', 1);
 
+// remove node labels border effect on hover
+s.settings('labelHoverShadowColor', '#fff');
+s.settings('labelHoverBGColor', '#c0c');
+
 s.bind("clickNode", function (n) {
     if (n.data.node.has_groups > 0)
         load_nodes_under(n.data.node.id)
