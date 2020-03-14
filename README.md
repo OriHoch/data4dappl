@@ -6,6 +6,69 @@ The site is available here: https://www.odata.org.il/en/
 
 ## Development Quickstart
 
+#### Using local CKAN backed by Docker based infrastructure
+
+* Verify Python version, it should be Python 2.7: `python --version`
+* Install Python virtualenv: `sudo apt-get install python-virtualenv`
+* Install Docker & Docker Compose
+
+###### Install (should be done once)
+
+```
+mkdir venv
+virtualenv --no-site-packages venv
+. venv/bin/activate
+pip install setuptools==36.1
+pip install -e 'git+https://github.com/ckan/ckan.git@ckan-2.8.2#egg=ckan'
+pip install -r venv/src/ckan/requirements.txt
+docker-compose up -d
+docker-compose exec -u postgres db createuser -S -D -R -P ckan_default
+docker-compose exec -u postgres db createdb -O ckan_default ckan_default -E utf-8
+mkdir venv/etc
+paster make-config ckan venv/etc/development.ini
+ln -s `pwd`/venv/src/ckan/who.ini `pwd`/venv/etc/who.ini
+mkdir venv/storage
+```
+
+Edit the created config file (`venv/etc/development.ini`) and set the following:
+
+```
+sqlalchemy.url = postgresql://ckan_default:pass@127.0.0.1/ckan_default
+solr_url = http://127.0.0.1:8983/solr/ckan
+ckan.site_url = http://localhost:5000
+ckan.storage_path = /absolute/path/to/venv/storage
+```
+
+Create the DB tables:
+
+```
+cd venv/src/ckan
+paster db init -c `pwd`/../../etc/development.ini
+```
+
+Install the odata plugin:
+
+```
+pip install -r ckan/requirements-odata.txt
+pip install -e ckan/ckanext-odata_org_il
+```
+
+Edit the configuration (`venv/etc/development.ini`) and add `odata_org_il` to ckan.plugins
+
+###### Start dev server
+
+```
+docker-compose up -d
+. venv/bin/activate
+( cd venv/src/ckan && paster serve `pwd`/../../etc/development.ini )
+```
+
+Create admin user
+
+```
+( cd venv/src/ckan && paster sysadmin add admin -c `pwd`/../../etc/development.ini )
+```
+
 #### Using local CKAN instlalation
 
 See the [Installing CKAN 2.8 Documentation](https://docs.ckan.org/en/2.8/maintaining/installing/index.html) to get a local CKAN installed for development. 

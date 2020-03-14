@@ -16,3 +16,4 @@ docker-compose.override.yml
 .checkpoints
 .dfs-checkpoints
 .ipynb_checkpoints
+venv
