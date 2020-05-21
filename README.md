@@ -19,7 +19,7 @@ mkdir venv
 virtualenv --no-site-packages venv
 . venv/bin/activate
 pip install setuptools==36.1
-pip install -e 'git+https://github.com/ckan/ckan.git@ckan-2.8.2#egg=ckan'
+pip install -e 'git+https://github.com/hasadna/ckan.git@master#egg=ckan'
 pip install -r venv/src/ckan/requirements.txt
 docker-compose up -d
 docker-compose exec -u postgres db createuser -S -D -R -P ckan_default
